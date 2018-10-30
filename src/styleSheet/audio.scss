@@ -1,0 +1,28 @@
+.player {
+  width: 100%;
+  position: fixed;
+  background-color: aquamarine;
+  padding: .6rem;
+  bottom: 0;
+  left: 0;
+}
+
+.p-wraper {
+  // width: 60%;
+}
+
+.v-control {
+  width: 200px;
+  height: 5px;
+  background-color: black;
+  position: relative;
+}
+
+.dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: white;
+  position: absolute;
+  top: -7px;
+}
