@@ -13,7 +13,7 @@ import MODIFY_PLAYLIST from "../state/playList"
       volume: 1,
       playList: props.playList,
       playIndex: 0,
-      muted: false,
+      muted: true,
       dotLeft: 0
     }
     this.volumeSilde = React.createRef();
@@ -24,7 +24,7 @@ import MODIFY_PLAYLIST from "../state/playList"
   componentDidMount() {
     this.setState({
       dotLeft: this.state.volume * this.volumeSilde.current.offsetWidth
-    })
+    });
   }
 
   componentWillReceiveProps(props) {
@@ -78,7 +78,7 @@ import MODIFY_PLAYLIST from "../state/playList"
         Add Songs
       </button>
         <div className="p-wraper flex f-start a-start">
-          <audio ref={this.audio} src={this.state.playList[this.state.playIndex]} muted={this.muted} controls autoPlay>
+          <audio ref={this.audio} src={this.state.playList[this.state.playIndex]} muted={this.muted} onEnded={() => this.nextSong()} controls autoPlay>
             Your browser does not support the <code>audio</code> element.
           </audio>
         </div>
@@ -87,7 +87,7 @@ import MODIFY_PLAYLIST from "../state/playList"
         </div>
         
       </div>
-    )
+    );
   }
 }
 
@@ -95,7 +95,7 @@ let fetchPlayList = (state) => {
   console.log(state);
   return {
     playList: state
-  }
+  };
 }
 // export default Player;
 export default connect(
