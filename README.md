@@ -8,4 +8,10 @@ clone https://github.com/Muzm/diRty.git
 cd dirty
 yarn install
 ```
+and modify `dirty/src/apiConfig.js` defaul object.api to your api adress.
+last run 
+```
+yarn start
+```
+It will run diRty in dev mode.
 
