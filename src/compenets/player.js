@@ -2,10 +2,12 @@ import React from 'react';
 import "../styleSheet/audio.scss";
 import { connect } from "react-redux";
 import axios from "axios";
+import ReactAudioPlayer from 'react-audio-player';
 
 import action from "../state/playList";
 
 import apiConfig from "../apiConfig";// import your api config
+
 
  class Player extends React.Component {
   constructor(props) {
@@ -21,6 +23,7 @@ import apiConfig from "../apiConfig";// import your api config
       muted: true,
       dotLeft: 0,
       urlOfCuurentSong: '',
+      autoPlay: false
     };
 
     this.volumeSilde = React.createRef();
@@ -85,7 +88,7 @@ import apiConfig from "../apiConfig";// import your api config
           Next
         </button>
         <div className="p-wraper flex f-start a-start">
-          <audio ref={this.audio} src={this.state.urlOfCuurentSong} muted={this.muted} onEnded={() => this.nextSong()} controls autoPlay>
+          <audio ref={this.audio} src={this.state.urlOfCuurentSong} muted={this.muted} onEnded={() => this.nextSong()} controls>
             Your browser does not support the <code>audio</code> element.
           </audio>
         </div>
@@ -95,6 +98,7 @@ import apiConfig from "../apiConfig";// import your api config
       </div>
     );
   }
+
 }
 
 let fetchPlayList = (store) => {
