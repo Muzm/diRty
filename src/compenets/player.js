@@ -1,21 +1,28 @@
 import React from 'react';
 import "../styleSheet/audio.scss";
 import { connect } from "react-redux";
-import MODIFY_PLAYLIST from "../state/playList"
+import axios from "axios";
+
+import action from "../state/playList";
+
+import apiConfig from "../apiConfig";// import your api config
 
  class Player extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       playing: false,
       currentBuffer: 0,
       lengthOfCurrentSong: 0,
       volume: 1,
       playList: props.playList,
-      playIndex: 0,
+      playIndex: props.playindex,
       muted: true,
-      dotLeft: 0
-    }
+      dotLeft: 0,
+      urlOfCuurentSong: '',
+    };
+
     this.volumeSilde = React.createRef();
     this.volumeMap = this.volumeMap.bind(this);
     this.audio = React.createRef();
@@ -29,19 +36,26 @@ import MODIFY_PLAYLIST from "../state/playList"
 
   componentWillReceiveProps(props) {
     this.setState({
-      playList: props.playList
+      playList: props.playList,
+      playIndex: props.playIndex,
+    },
+    this.getCurrentSongPlayUrl);
+  }
+
+  async getCurrentSongPlayUrl() {
+    const vendor = window.location.href.split('/').slice(-1).pop() === "net" ? "netease" : "xiami";
+    const { id } = this.state.playList[this.state.playIndex] || {};
+    let url = id && await axios.get(`http://${apiConfig.api}/getSong?vendor=${vendor}&id=${id}`);
+    this.setState({
+      urlOfCuurentSong: url.data.url
     });
   }
 
   nextSong() {
     if(this.state.playIndex + 1 === this.state.playList.length) {
-      this.setState({
-        playIndex: 0
-      });
+      this.props.PLAY_INDEX(0);
     } else {
-      this.setState({
-        playIndex: this.state.playIndex + 1
-      });
+      this.props.PLAY_INDEX(this.state.playIndex + 1);
     }
   }
 
@@ -55,50 +69,43 @@ import MODIFY_PLAYLIST from "../state/playList"
 
   previousSong() {
     if((this.state.playIndex - 1) < 0) {
-      this.setState({
-        playIndex: this.state.playList.length
-      });
+      this.props.PLAY_INDEX(this.state.playList.length - 1);
     } else {
-      this.setState({
-        playIndex: this.state.playIndex - 1
-      });
+      this.props.PLAY_INDEX(this.state.playIndex - 1);
     }
   }
 
   render () {
     return (
       <div className="player flex j-center a-start">
-      <button onClick={()=>{this.previousSong()}}>
-        Previous
-      </button>
-      <button onClick={()=>{this.nextSong()}}>
-        Next
-      </button>
-      <button onClick={()=>{this.props.MODIFY_PLAYLIST(["https://m10.music.126.net/20181030094945/0ec42d3db332de5f908109b63dbdece5/ymusic/a432/cdd6/73a9/09860040cec3c89b2d43af39d98b8ba6.mp3", "https://m10.music.126.net/20181030095137/bf3709c40ee3042e334e74e9fc0e3be7/ymusic/278c/e898/64cc/032a5b83bacd041aa917e7f7b3db8a75.mp3", "https://m10.music.126.net/20181030095354/2012a8d8af202e4ed8f4eb6bb85419b2/ymusic/b2ee/88ca/1a41/006378012d7598ce3b98dd2aba332ef1.mp3", "https://m10.music.126.net/20181030095414/c9d593a8ac72318670ddaa5c4e1b916a/ymusic/9ab8/2a32/5adc/e0c3d1a8d473bbd50e6b199769bfae0c.mp3"])}}>
-        Add Songs
-      </button>
+        <button onClick={()=>{this.previousSong()}}>
+          Previous
+        </button>
+        <button onClick={()=>{this.nextSong()}}>
+          Next
+        </button>
         <div className="p-wraper flex f-start a-start">
-          <audio ref={this.audio} src={this.state.playList[this.state.playIndex]} muted={this.muted} onEnded={() => this.nextSong()} controls autoPlay>
+          <audio ref={this.audio} src={this.state.urlOfCuurentSong} muted={this.muted} onEnded={() => this.nextSong()} controls autoPlay>
             Your browser does not support the <code>audio</code> element.
           </audio>
         </div>
         <div className="v-control" ref={this.volumeSilde} onClick={this.volumeMap}>
           <div className="dot" style={{left: this.state.dotLeft}}></div>
         </div>
-        
       </div>
     );
   }
 }
 
-let fetchPlayList = (state) => {
-  console.log(state);
+let fetchPlayList = (store) => {
   return {
-    playList: state
+    playList: store.playList,
+    playIndex: store.playIndex
   };
 }
+
 // export default Player;
 export default connect(
   fetchPlayList,
-  { MODIFY_PLAYLIST }
+  action
 )(Player);

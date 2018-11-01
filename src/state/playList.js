@@ -5,4 +5,14 @@ let MODIFY_PLAYLIST = (value) => {
   };
 };
 
-export default MODIFY_PLAYLIST
+let PLAY_INDEX = (index) => {
+  return {
+    type: "PLAY_INDEX",
+    value: index
+  };
+};
+
+export default {
+  MODIFY_PLAYLIST,
+  PLAY_INDEX
+};

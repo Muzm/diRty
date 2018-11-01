@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import axios from "axios";
+import { connect } from "react-redux";
+import action from "../state/playList";
 
 import Onetracks from './oneTrack';
+
+import apiConfig from "../apiConfig"; // import your api config
 
  class Net extends Component {
   constructor(props) {
@@ -9,20 +13,21 @@ import Onetracks from './oneTrack';
   
     this.state = {
       playList: [],
-      songList: []
-    }
+      songList: [],
+    };
   }
 
   async componentDidMount() {
-    let netPlayList = await axios.get("http://127.0.0.1:3001/netList");
+    let netPlayList = await axios.get(`http://${apiConfig.api}/netList`);
     
-    console.log(netPlayList.data.playlist.tracks);
     let data = netPlayList.data.playlist.tracks;
+    this.props.MODIFY_PLAYLIST(data);
     this.setState({
       playList: data,
-      songList: data.map((item, index) => (<Onetracks key={index} name={item.name} id={item.id} ar={item.ar}></Onetracks>))
+      songList: data.map((item, index) => (<Onetracks onClick={() => {
+        this.props.PLAY_INDEX(index);
+      }} key={index} name={item.name} id={item.id} ar={item.ar}></Onetracks>))
     });
-    console.log(this.state.songList);
   }
 
   render () {
@@ -32,8 +37,11 @@ import Onetracks from './oneTrack';
           {this.state.songList}
         </ul>
       </div>
-    )
+    );
   }
 }
 
-export default Net
+export default connect(
+  null,
+  action
+)(Net)

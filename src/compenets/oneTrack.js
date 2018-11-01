@@ -15,11 +15,12 @@ class Track extends React.Component {
   render() {
     return (
       <li className="a-track flex">
-        <div className="track">
+        <div className="track" onClick={this.props.onClick}>
           <span>{this.state.trackName}</span>
         </div>
+        
         <div className="ar">
-          <span>{this.state.ar[0].name}</span>
+        -<span>{this.state.ar[0].name}</span>
         </div>
       </li>
     )

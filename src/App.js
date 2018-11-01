@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import { createStore, combineReducers } from "redux";
+import { createStore } from "redux";
 import { Provider } from 'react-redux';
 
 import Xiami from "./compenets/xiami";
@@ -9,23 +9,26 @@ import Player from "./compenets/player"
 
 import './styleSheet/App.css';
 
-let playList = (state = [], action) => {
+let intialPLayInfo = {
+  playList: [],
+  playIndex: 0
+};
+
+let playInfo = (state = {}, action) => {
   switch(action.type) {
     case "MODIFY_PLAYLIST":
-      return action.value
+      return Object.assign({}, state, {playList: action.value, playIndex: state.playIndex})
+    case "PLAY_INDEX":
+      return Object.assign({}, state, {playIndex: action.value, playList: state.playList})
     default:
       return state
   }
-}
+};
 
-let MODIFY_PLAYLIST = (value) => ({
-  type: "MODIFY_PLAYLIST",
-  value: value
-});
-
-let store = createStore(playList);
-
-// store.dispatch(MODIFY_PLAYLIST([1,2,3]));
+let store = createStore(
+  playInfo, 
+  intialPLayInfo
+);
 
 class App extends Component {
   render() {
