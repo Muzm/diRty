@@ -1,8 +1,17 @@
 # diRty.
 ### This project got ugly non-designed interface, prepare for it.
-You need [diRty-api](https://github.com/Muzm/diRty-api) to run this project in dev mode.
-If you already got it. just clone this rep and:
+## Installing
+You need [diRty-api](https://github.com/Muzm/diRty-api) to run this project.
+when you finish install [diRty-api](https://github.com/Muzm/diRty-api), then
 ```
+clone https://github.com/Muzm/diRty.git
+cd dirty
 yarn install
+```
+and modify `dirty/src/apiConfig.js` defaul object.api to your api adress.
+last run 
+```
 yarn start
 ```
+It will run diRty in dev mode.
+
