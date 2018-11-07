@@ -1,3 +1,3 @@
 export default {
-  api: '10.101.2.13:3001', // modify this to your diRty-api adress
+  api: '127.0.0.1:3001', // modify this to your diRty-api adress
 } 

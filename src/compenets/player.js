@@ -31,7 +31,7 @@ import apiConfig from "../apiConfig";// import your api config
     this.audio = React.createRef();
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.setState({
       dotLeft: this.state.volume * this.volumeSilde.current.offsetWidth
     });

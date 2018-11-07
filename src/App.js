@@ -3,9 +3,10 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { createStore } from "redux";
 import { Provider } from 'react-redux';
 
-import Xiami from "./compenets/xiami";
+import Index from "./compenets/index";
 import Net from "./compenets/net";
 import Player from "./compenets/player"
+import List from "./compenets/oneList"
 
 import './styleSheet/App.css';
 
@@ -37,8 +38,7 @@ class App extends Component {
         <Router>
           <div className="App">
             <Switch>
-              <Route exact path="/" component={Xiami} playList={[]}></Route>
-              <Route path="/xiami" component={Xiami}></Route>
+              <Route exact path="/" component={Index} playList={[]}></Route>
               <Route path="/net" component={Net}></Route>
             </Switch>
 

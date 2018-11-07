@@ -6,7 +6,7 @@ class Track extends React.Component {
     super(props);
 
     this.state = {
-      trackName: props.name,
+      trackName: props.trackName,
       id: props.id,
       ar: props.ar
     }
