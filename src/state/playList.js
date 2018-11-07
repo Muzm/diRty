@@ -1,7 +1,8 @@
 let MODIFY_PLAYLIST = (value) => {
   return {
     type: "MODIFY_PLAYLIST",
-    value: value
+    value: value.playList,
+    playIndex: value.playIndex
   };
 };
 

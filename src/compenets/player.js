@@ -48,7 +48,7 @@ import apiConfig from "../apiConfig";// import your api config
   async getCurrentSongPlayUrl() {
     const vendor = window.location.href.split('/').slice(-1).pop() === "net" ? "netease" : "xiami";
     const { id } = this.state.playList[this.state.playIndex] || {};
-    let url = id && await axios.get(`http://${apiConfig.api}/getSong?vendor=${vendor}&id=${id}`);
+    let url = id && await axios.get(`http://${apiConfig.api}/getSong?vendor=${"netease"}&id=${id}`);
     this.setState({
       urlOfCuurentSong: url.data.url
     });
@@ -88,7 +88,7 @@ import apiConfig from "../apiConfig";// import your api config
           Next
         </button>
         <div className="p-wraper flex f-start a-start">
-          <audio ref={this.audio} src={this.state.urlOfCuurentSong} muted={this.muted} onEnded={() => this.nextSong()} controls>
+          <audio ref={this.audio} src={this.state.urlOfCuurentSong} muted={this.muted} onEnded={() => this.nextSong()} autoPlay controls>
             Your browser does not support the <code>audio</code> element.
           </audio>
         </div>

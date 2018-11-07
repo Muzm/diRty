@@ -18,7 +18,7 @@ let intialPLayInfo = {
 let playInfo = (state = {}, action) => {
   switch(action.type) {
     case "MODIFY_PLAYLIST":
-      return Object.assign({}, state, {playList: action.value, playIndex: state.playIndex})
+      return Object.assign({}, state, {playList: action.value, playIndex: action.playIndex || 0})
     case "PLAY_INDEX":
       return Object.assign({}, state, {playIndex: action.value, playList: state.playList})
     default:
