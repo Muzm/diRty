@@ -9,7 +9,8 @@ class Track extends React.Component {
       trackName: props.trackName,
       id: props.id,
       ar: props.ar,
-      dt: props.dt
+      dt: props.dt,
+      duration: `${Math.round(this.props.dt / 60000)}:${this.props.dt % 60 > 10 ? this.props.dt % 60 : "0" + this.props.dt % 60}`
     }
   }
 
@@ -24,7 +25,7 @@ class Track extends React.Component {
           &nbsp;-&nbsp;
           <span>{this.state.ar[0].name} &nbsp;</span>
         </div>
-        <div className="duration">{Math.round(this.state.dt / 60000)}:{this.props.dt % 60 > 10 ? this.props.dt % 60 : "0" + this.props.dt % 60 }</div>
+        <div title={this.state.duration} className="duration">{this.state.duration}</div>
       </li>
     )
   }

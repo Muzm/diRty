@@ -9,6 +9,7 @@
 
 .right-bottom ul, .a-track, .right-bottom {
   width: 100%;
+  max-width: 100%;
 }
 
 .track {
@@ -25,7 +26,11 @@
 }
 
 .ar {
-  max-width: 40%;
+  max-width: 30%;
+}
+
+.duration {
+  max-width: 10%;
 }
 
 /* .track:hover {
