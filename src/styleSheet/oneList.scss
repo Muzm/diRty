@@ -1,0 +1,41 @@
+$length: 160px;
+
+.left img {
+  width: $length;
+  height: $length;
+  border-radius: 10%;
+}
+
+.list-name {
+  margin: 0;
+  padding-top: 7px;
+  margin-bottom: 6px;
+  font-size: 1.2rem;
+}
+
+.List-wrap {
+  margin-bottom: 32px;  
+}
+
+.right {
+  margin-left: 15px;
+  flex-grow: 1;
+}
+
+.view-all {
+  color: #999;
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+.view-all-wap {
+  cursor: pointer;
+}
+
+.view-all-wap:hover > .view-all {
+  color: #333333;
+}
+
+// .List-wrap {
+//   margin-top: 20px;
+// }

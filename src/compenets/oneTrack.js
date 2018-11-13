@@ -8,20 +8,23 @@ class Track extends React.Component {
     this.state = {
       trackName: props.trackName,
       id: props.id,
-      ar: props.ar
+      ar: props.ar,
+      dt: props.dt
     }
   }
 
   render() {
     return (
       <li className="a-track flex">
-        <div className="track" onClick={this.props.onClick}>
+        <div className="track no-wrap-eli" onClick={this.props.onClick} title={this.state.trackName}>
           <span>{this.state.trackName}</span>
         </div>
         
-        <div className="ar">
-        -<span>{this.state.ar[0].name}</span>
+        <div className="ar no-wrap-eli" title={this.state.ar[0].name}>
+          &nbsp;-&nbsp;
+          <span>{this.state.ar[0].name} &nbsp;</span>
         </div>
+        <div className="duration">{Math.round(this.state.dt / 60000)}:{this.props.dt % 60 > 10 ? this.props.dt % 60 : "0" + this.props.dt % 60 }</div>
       </li>
     )
   }

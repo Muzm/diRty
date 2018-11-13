@@ -1,9 +1,33 @@
+.a-track {
+  font-size: 14px;
+}
+
+.a-track:hover {
+  background-color: #f2f2f2;
+  color: #999;
+}
+
+.right-bottom ul, .a-track, .right-bottom {
+  width: 100%;
+}
+
 .track {
   cursor: pointer;
   color: blue;
-  border-bottom: 1px solid transparent;
+  /* border-bottom: 1px solid transparent; */
+  max-width: 60%;
 }
 
-.track:hover {
-  border-bottom: 1px solid blue;
+.no-wrap-eli {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
+
+.ar {
+  max-width: 40%;
+}
+
+/* .track:hover {
+  border-bottom: 1px solid blue;
+} */

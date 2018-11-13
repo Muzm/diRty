@@ -36,13 +36,13 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router>
-          <div className="App">
+          <div className="App flex j-center">
             <Switch>
               <Route exact path="/" component={Index} playList={[]}></Route>
               <Route path="/net" component={Net}></Route>
             </Switch>
 
-            <Player />
+            <Player/>
           </div>
         </Router>
       </Provider>

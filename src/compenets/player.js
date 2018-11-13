@@ -2,7 +2,6 @@ import React from 'react';
 import "../styleSheet/audio.scss";
 import { connect } from "react-redux";
 import axios from "axios";
-import ReactAudioPlayer from 'react-audio-player';
 
 import action from "../state/playList";
 
@@ -17,7 +16,7 @@ import apiConfig from "../apiConfig";// import your api config
       playing: false,
       currentBuffer: 0,
       lengthOfCurrentSong: 0,
-      volume: 1,
+      volume: localStorage.getItem("volume") || 1,
       playList: props.playList,
       playIndex: props.playindex,
       muted: true,
@@ -32,9 +31,8 @@ import apiConfig from "../apiConfig";// import your api config
   }
 
   async componentDidMount() {
-    this.setState({
-      dotLeft: this.state.volume * this.volumeSilde.current.offsetWidth
-    });
+    this.setState({dotLeft: this.state.volume * this.volumeSilde.current.offsetWidth});
+    this.audio.current.volume = this.state.volume;
   }
 
   componentWillReceiveProps(props) {
@@ -63,10 +61,13 @@ import apiConfig from "../apiConfig";// import your api config
   }
 
   volumeMap(e) {
+    const volume = e.nativeEvent.layerX / this.volumeSilde.current.offsetWidth;
     this.setState({
       dotLeft: e.nativeEvent.layerX,
-      volume: e.nativeEvent.layerX / this.volumeSilde.current.offsetWidth
+      volume: volume
     });
+
+    localStorage.setItem("volume", volume);
     this.audio.current.volume = e.nativeEvent.layerX / this.volumeSilde.current.offsetWidth;
   }
 
@@ -80,7 +81,7 @@ import apiConfig from "../apiConfig";// import your api config
 
   render () {
     return (
-      <div className="player flex j-center a-start">
+      <div className="player flex j-center a-center">
         <button onClick={()=>{this.previousSong()}}>
           Previous
         </button>

@@ -12,3 +12,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.index-wrap {
+  margin-bottom: 4rem;
+  width: 70%;
+  overflow: hidden;
+}
+
+.main-group {
+  overflow: hidden;
+}
+
+.main-outter {
+  border-left: 1px solid brown;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 20px;
+  overflow-y: scroll;
+  overflow-x: hidden; 
+  width: 50%;
+}
