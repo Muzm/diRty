@@ -27,19 +27,7 @@ class List extends React.Component {
   }
 
   async componentDidMount() {
-    this.trackFetcher(10);    
-
-
-
-    // this.props.scroll.addEventListener('scroll', (event)=> {
-    //   if(this.state.viewAll) {
-    //     let moreThenParent = event.target.scrollTop > this.list.current.scrollHeight;
-    //     let lessThenFooter = event.target.scrollTop < (this.list.current.scrollHeight + this.list.current.offsetHeight);
-    //     if(moreThenParent && lessThenFooter) {
-    //       console.log(event.target.scrollTop);
-    //     }
-    //   }
-    // });
+    this.trackFetcher(10);
   }
 
   countAngleTop() {
@@ -76,7 +64,7 @@ class List extends React.Component {
       this.setState({
         visiableTRACKS: this.state.tracks.slice(0, 10), 
         viewAll: false
-      });
+      }, ()=> this.list.current.scrollIntoView());
     } else if(this.state.allFetched) {
       this.setState({
         visiableTRACKS: this.state.tracks,

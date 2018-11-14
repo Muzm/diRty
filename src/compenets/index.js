@@ -5,6 +5,7 @@ import action from "../state/playList";
 import List from "./oneList";
 import "../styleSheet/index.css";
 import DoSome from "./doSome";
+import debounce from 'lodash.debounce';
 
 import apiConfig from "../apiConfig"; // import your api config
 
@@ -16,18 +17,17 @@ import apiConfig from "../apiConfig"; // import your api config
       userPlayList: [],
       scrollTop: 0
     };
-
+    
+    this.scrollTopDebounce = debounce((e)=> {
+      this.setState({
+        scrollTop: e.target.scrollTop 
+      });
+    }, 100);
   }
 
   async componentDidMount() {
     let userPlayList = await axios.get(`http://${apiConfig.api}/userPlayList?uid=${348024701}`)
-    // let listDetail = userPlayList.data.playlist.map((item, index)=> {
-    //   return (
-    //     <li key={index}>
-    //       <List srcoll={this.srcolling} name={item.name} img={item.coverImgUrl} id={item.id} action={this.props.MODIFY_PLAYLIST}></List>
-    //     </li>
-    //   );
-    // });
+
     this.setState({
       userPlayList: userPlayList.data.playlist,
     });
@@ -36,7 +36,10 @@ import apiConfig from "../apiConfig"; // import your api config
   render () {
     return (
       <div className="index-wrap flex">
-        <div onScroll={(e)=> {this.setState({scrollTop: e.target.scrollTop})}} className="main-outter">
+        <div onScroll={(e)=> {
+                        e.persist();
+                        this.scrollTopDebounce(e);
+                      }} className="main-outter">
           <ul className="main-group flex-c">
             {this.state.userPlayList.map((item, index)=> {
               return (
