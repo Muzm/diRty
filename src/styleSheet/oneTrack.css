@@ -7,11 +7,6 @@
   color: #999;
 }
 
-.right-bottom ul, .a-track, .right-bottom {
-  width: 100%;
-  max-width: 100%;
-}
-
 .track {
   cursor: pointer;
   color: blue;
@@ -31,6 +26,10 @@
 
 .duration {
   max-width: 10%;
+}
+
+.movingAngle {
+  position: fixed;
 }
 
 /* .track:hover {

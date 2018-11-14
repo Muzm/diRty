@@ -18,13 +18,14 @@ class Track extends React.Component {
     return (
       <li className="a-track flex">
         <div className="track no-wrap-eli" onClick={this.props.onClick} title={this.state.trackName}>
-          <span>{this.state.trackName}</span>
-        </div>
-        
-        <div className="ar no-wrap-eli" title={this.state.ar[0].name}>
-          &nbsp;-&nbsp;
-          <span>{this.state.ar[0].name} &nbsp;</span>
-        </div>
+            <span>{this.state.trackName}</span>
+          </div>
+          
+          <div className="ar no-wrap-eli" title={this.state.ar[0].name}>
+            &nbsp;-&nbsp;
+            <span>{this.state.ar[0].name} &nbsp;</span>
+          </div>
+
         <div title={this.state.duration} className="duration">{this.state.duration}</div>
       </li>
     )

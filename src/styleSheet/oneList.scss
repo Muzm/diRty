@@ -1,5 +1,10 @@
 $length: 160px;
 
+.right-bottom ul, .a-track, .right-bottom {
+  width: 100%;
+  max-width: 100%;
+}
+
 .left img {
   width: $length;
   height: $length;
@@ -17,9 +22,14 @@ $length: 160px;
   margin-bottom: 32px;  
 }
 
+.left, .float-less {
+  position: relative;
+}
+
 .right {
   margin-left: 15px;
   flex-grow: 1;
+  max-width: 447.5px;
 }
 
 .view-all {
@@ -36,6 +46,37 @@ $length: 160px;
   color: #333333;
 }
 
-// .List-wrap {
-//   margin-top: 20px;
-// }
+.float-less {
+  height: 100%;
+  // padding-top: 8px;
+  position: relative;
+  width: 2rem;
+  margin-top: 8px;
+}
+
+.float-less > i {
+  font-size: 2rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 10%;
+  line-height: 32px; 
+  text-align: center;
+  cursor: pointer;
+}
+
+.float-less > i:hover {
+  background-color: #f2f2f2;
+  color: #333333;
+}
+
+.angle {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.right-bottom {
+  // max-height: 285px;
+  // overflow-y: scroll;
+  // overflow-x: hidden;
+}

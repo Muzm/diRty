@@ -14,33 +14,37 @@ import apiConfig from "../apiConfig"; // import your api config
   
     this.state = {
       userPlayList: [],
-      JSXList: []
+      scrollTop: 0
     };
+
   }
 
   async componentDidMount() {
     let userPlayList = await axios.get(`http://${apiConfig.api}/userPlayList?uid=${348024701}`)
-    let listDetail = userPlayList.data.playlist.map(async (item, index)=> {
-      // let tracks = await axios.get(`http://${apiConfig.api}/listDetail?id=${item.id}&limit=10&offset=1`);
-      return (
-        <li key={index}>
-          <List name={item.name} img={item.coverImgUrl} id={item.id} action={this.props.MODIFY_PLAYLIST}></List>
-        </li>
-      )
-    });
-    listDetail = await Promise.all(listDetail);
+    // let listDetail = userPlayList.data.playlist.map((item, index)=> {
+    //   return (
+    //     <li key={index}>
+    //       <List srcoll={this.srcolling} name={item.name} img={item.coverImgUrl} id={item.id} action={this.props.MODIFY_PLAYLIST}></List>
+    //     </li>
+    //   );
+    // });
     this.setState({
       userPlayList: userPlayList.data.playlist,
-      JSXList: listDetail
     });
   }
 
   render () {
     return (
       <div className="index-wrap flex">
-        <div className="main-outter">
+        <div onScroll={(e)=> {this.setState({scrollTop: e.target.scrollTop})}} className="main-outter">
           <ul className="main-group flex-c">
-            {this.state.JSXList}
+            {this.state.userPlayList.map((item, index)=> {
+              return (
+                <li key={index}>
+                  <List scrollTop={this.state.scrollTop} name={item.name} img={item.coverImgUrl} id={item.id} action={this.props.MODIFY_PLAYLIST}></List>
+                </li>
+              );
+            })}
           </ul>
         </div>
         <DoSome></DoSome>
