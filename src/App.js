@@ -12,7 +12,8 @@ import './styleSheet/App.css';
 
 let intialPLayInfo = {
   playList: [],
-  playIndex: 0
+  playIndex: 0,
+  fixedId: null
 };
 
 let playInfo = (state = {}, action) => {
@@ -21,6 +22,8 @@ let playInfo = (state = {}, action) => {
       return Object.assign({}, state, {playList: action.value, playIndex: action.playIndex || 0})
     case "PLAY_INDEX":
       return Object.assign({}, state, {playIndex: action.value, playList: state.playList})
+    case "FIXED_ID":
+      return Object.assign({}, state, {fixedId: action.value})
     default:
       return state
   }

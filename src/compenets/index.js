@@ -22,7 +22,7 @@ import apiConfig from "../apiConfig"; // import your api config
       this.setState({
         scrollTop: e.target.scrollTop 
       });
-    }, 100);
+    }, 300);
   }
 
   async componentDidMount() {

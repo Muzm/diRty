@@ -13,7 +13,15 @@ let PLAY_INDEX = (index) => {
   };
 };
 
+let FIXED_ID = (id) => {
+  return {
+    type: "FIXED_ID",
+    vlaue: id
+  }
+}
+
 export default {
   MODIFY_PLAYLIST,
-  PLAY_INDEX
+  PLAY_INDEX,
+  FIXED_ID
 };
