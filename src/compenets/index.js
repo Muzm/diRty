@@ -50,7 +50,7 @@ import apiConfig from "../apiConfig"; // import your api config
             })}
           </ul>
         </div>
-        <DoSome></DoSome>
+        <DoSome action={this.props.MODIFY_PLAYLIST}></DoSome>
       </div>
     );
   }

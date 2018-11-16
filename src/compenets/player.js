@@ -89,7 +89,7 @@ import apiConfig from "../apiConfig";// import your api config
           Next
         </button>
         <div className="p-wraper flex f-start a-start">
-          <audio ref={this.audio} src={this.state.urlOfCuurentSong} muted={this.muted} onEnded={() => this.nextSong()} onCanPlay={() => this.audio.play()} controls>
+          <audio ref={this.audio} src={this.state.urlOfCuurentSong} muted={this.muted} onEnded={() => this.nextSong()} autoPlay controls>
             Your browser does not support the <code>audio</code> element.
           </audio>
         </div>
