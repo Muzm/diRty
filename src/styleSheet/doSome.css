@@ -1,14 +1,40 @@
 .do-some {
-  width: 50%;
-  /* flex-basis: 50%; */
   background-color: brown;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  height: 100%;
-  overflow-y: scroll;
-  overflow-x: hidden
+  padding-bottom: 3px;
 }
 
-.result-container {
+.result-container, .p-n-btn, .result-u {
   width: 100%;
+}
+
+.p-n-btn {
+  margin-top: 8px;
+}
+
+.offseter {
+  width: 3rem;
+}
+
+.p-n-btn > .fas {
+  margin: 0 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.type-item {
+  cursor: pointer;
+}
+
+.type-item.active {
+  color: blue;
+}
+
+h2 {
+  margin: 0;
+  padding: 0;
+}
+
+.curr-title {
+  margin-top: .4rem;
+  margin-bottom: .4rem;
 }

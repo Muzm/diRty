@@ -12,7 +12,7 @@ class Result extends React.Component {
 
   render() {
     return (
-      <ul className="result-u">
+      <ul className="result-u flex-c j-start a-start">
         {
           this.props.tracks.map((item, index)=>{
             return (
@@ -20,7 +20,7 @@ class Result extends React.Component {
                 this.props.action({
                   playList: this.props.tracks,
                   playIndex: index
-                })
+                });
               }} key={item.id} dt={item.duration} trackName={item.name} id={item.id} ar={item.artists}></Track>
             )
           })

@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
-import axios from "axios";
 import { connect } from "react-redux";
 import action from "../state/playList";
-import List from "./oneList";
 import "../styleSheet/index.css";
 import DoSome from "./doSome";
 import debounce from 'lodash.debounce';
 
-import apiConfig from "../apiConfig"; // import your api config
+import UserPlayList from './userPlayLists';
+import ArtistAlbums from './artistAlbums';
 
  class Index extends Component {
   constructor(props) {
     super(props);
   
     this.state = {
-      userPlayList: [],
+      List2Render: [],
       scrollTop: 0
     };
     
@@ -25,14 +24,6 @@ import apiConfig from "../apiConfig"; // import your api config
     }, 300);
   }
 
-  async componentDidMount() {
-    let userPlayList = await axios.get(`http://${apiConfig.api}/userPlayList?uid=${348024701}`)
-
-    this.setState({
-      userPlayList: userPlayList.data.playlist,
-    });
-  }
-
   render () {
     return (
       <div className="index-wrap flex">
@@ -40,15 +31,8 @@ import apiConfig from "../apiConfig"; // import your api config
                         e.persist();
                         this.scrollTopDebounce(e);
                       }} className="main-outter">
-          <ul className="main-group flex-c">
-            {this.state.userPlayList.map((item, index)=> {
-              return (
-                <li key={index}>
-                  <List scrollTop={this.state.scrollTop} name={item.name} img={item.coverImgUrl} id={item.id} action={this.props.MODIFY_PLAYLIST}></List>
-                </li>
-              );
-            })}
-          </ul>
+          <ArtistAlbums action={this.props.MODIFY_PLAYLIST}
+           scrollTop={this.state.scrollTop} aid={101996}></ArtistAlbums>
         </div>
         <DoSome action={this.props.MODIFY_PLAYLIST}></DoSome>
       </div>
@@ -60,5 +44,3 @@ export default connect(
   null,
   action
 )(Index);
-
-// export default Index;

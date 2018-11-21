@@ -5,6 +5,7 @@ import axios from 'axios';
 import "../styleSheet/oneList.scss";
 
 import apiConfig from "../apiConfig"; // import your api config
+import { off } from "rsvp";
 
 
 class List extends React.Component {
@@ -17,7 +18,7 @@ class List extends React.Component {
       tracks: [],
       visiableTRACKS: [],
       viewAll: false,
-      trackCount: 0,
+      trackCount: this.props.isAlbum ? this.props.size : 0,
       allFetched: false,
       angle: {top: 0}
     };
@@ -27,26 +28,49 @@ class List extends React.Component {
   }
 
   async componentDidMount() {
-    this.trackFetcher(10);
+    this.props.isAlbum ? this.albumDetailFetcher(10) : this.trackFetcher(10);
   }
 
   countAngleTop() {
     if(this.props.scrollTop > this.list.current.offsetTop && this.props.scrollTop < (this.list.current.offsetHeight + this.list.current.offsetTop)) {
       return {
         top: this.props.scrollTop - this.list.current.offsetTop + 'px'
-      }
+      };
     }
   }
 
-  async trackFetcher(limit, offset) {
-    let tracks = await axios.get(`http://${apiConfig.api}/listDetail?id=${this.state.id}&limit=${limit || 'all'}&offset=${offset || 0}`);
+  async trackFetcher(limit = 'all', offset = 0) {
+    let tracks = await axios.get(`http://${apiConfig.api}/listDetail?id=${this.state.id}&limit=${limit}&offset=${offset}`);
     this.setState({
       tracks: tracks.data.playlist.tracks,
       trackCount: tracks.data.playlist.trackCount,
       viewAll: limit === 'all' ? true : false,
-      visiableTRACKS: limit === 'all' ? tracks.data.playlist.tracks : tracks.data.playlist.tracks.slice(0, 10),
+      visiableTRACKS: limit === 'all' ? tracks.data.playlist.tracks : tracks.data.playlist.tracks.slice(0, 10), // need fix
       allFetched: limit === 'all' ? true : false
     });
+  }
+
+  async albumDetailFetcher(limit = 'all', offset = 0) {
+    let tracks = (await axios.get(`http://${apiConfig.api}/albumDetail?id=${this.props.id}&limit=${limit}&offset=${offset}`)).data;
+    console.log(tracks);
+    this.setState({
+      visiableTRACKS: tracks.songs,
+      tracks: tracks.songs,
+      trackCount: tracks.album.size,
+      publishTime: tracks.album.publishTime,
+      viewAll: limit === 'all' ? true : false,
+      allFetched: limit === 'all' ? true : false
+    });
+    // const promises = artistAlbums.data.hotAlbums.map(async (item)=> {
+    //   item.tracks = (await axios.get(`http://${apiConfig.api}/albumDetail?id=${item.id}`)).data.songs;
+    //   return item;
+    // });
+
+    // artistAlbums = await Promise.all(promises);
+    // this.setState({
+
+    // });
+    // console.log(artistAlbums);
   }
 
   isElementInViewport(el) {
@@ -71,7 +95,7 @@ class List extends React.Component {
         viewAll: true
       });
     } else {
-      this.trackFetcher('all');
+      this.props.isAlbum ? this.albumDetailFetcher('all') : this.trackFetcher('all');
     }
   }
 
