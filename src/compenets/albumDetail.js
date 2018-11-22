@@ -1,19 +1,19 @@
 import React from 'react';
 
+import List from "./oneList";
+
+
 class AlbumDetail extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-
-    }
+    this.params = new URLSearchParams(this.props.location.search);
   }
 
   render() {
-    return(
+    return (
       <div className="album-detail">
-        <h2>AlbumPage:</h2>
-        
+        <List scrollTop={this.props.scrollTop} action={this.props.action} id={this.params.get('id')} isAlbum={true}></List>
       </div>
     )
   }

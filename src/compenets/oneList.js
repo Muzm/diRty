@@ -32,7 +32,7 @@ class List extends React.Component {
   }
 
   countAngleTop() {
-    if(this.props.scrollTop > this.list.current.offsetTop && this.props.scrollTop < (this.list.current.offsetHeight + this.list.current.offsetTop)) {
+    if(this.props.scrollTop > this.list.current.offsetTop && this.props.scrollTop < (this.list.current.offsetHeight + this.list.current.offsetTop - 100)) {
       return {
         top: this.props.scrollTop - this.list.current.offsetTop + 'px'
       };
@@ -52,25 +52,16 @@ class List extends React.Component {
 
   async albumDetailFetcher(limit = 'all', offset = 0) {
     let tracks = (await axios.get(`http://${apiConfig.api}/albumDetail?id=${this.props.id}&limit=${limit}&offset=${offset}`)).data;
-    console.log(tracks);
     this.setState({
       visiableTRACKS: tracks.songs,
       tracks: tracks.songs,
       trackCount: tracks.album.size,
       publishTime: tracks.album.publishTime,
+      name: tracks.album.name,
       viewAll: limit === 'all' ? true : false,
-      allFetched: limit === 'all' ? true : false
+      allFetched: limit === 'all' ? true : false,
+      img: tracks.album.picUrl
     });
-    // const promises = artistAlbums.data.hotAlbums.map(async (item)=> {
-    //   item.tracks = (await axios.get(`http://${apiConfig.api}/albumDetail?id=${item.id}`)).data.songs;
-    //   return item;
-    // });
-
-    // artistAlbums = await Promise.all(promises);
-    // this.setState({
-
-    // });
-    // console.log(artistAlbums);
   }
 
   isElementInViewport(el) {
@@ -108,7 +99,7 @@ class List extends React.Component {
     return (
       <div ref={this.list} className="List-wrap flex">
         <div className="left flex-c j-start a-end">
-          <img src={this.props.img}></img>
+          <img src={this.props.img || this.state.img}></img>
           {
             this.state.viewAll && <div ref={this.angle} className="float-less">
               <i onClick={()=>{this.backToThePlaceWhereTheAllBegin()}} style={this.state.viewAll && this.countAngleTop()} className="fas fa-angle-up angle"></i>
@@ -118,7 +109,7 @@ class List extends React.Component {
         <div className="right flex-c j-start a-start">
           <div className="right-top">
             <div className="list-info">
-              <h2 className="list-name">{this.props.name}</h2>
+              <h2 className="list-name">{this.props.name || this.state.name}</h2>
             </div>
           </div>
           <div className="right-bottom">
@@ -150,8 +141,3 @@ class List extends React.Component {
 }
 
 export default List;
-
-// export default connect(
-//   null,
-//   action
-// )(List);

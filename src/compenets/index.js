@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import action from "../state/playList";
+import action from "../actions/playList";
 import "../styleSheet/index.css";
 import DoSome from "./doSome";
 import debounce from 'lodash.debounce';
 
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
 import UserPlayList from './userPlayLists';
 import ArtistAlbums from './artistAlbums';
+import AlbumDetail from './albumDetail';
 
  class Index extends Component {
   constructor(props) {
@@ -24,6 +27,12 @@ import ArtistAlbums from './artistAlbums';
     }, 300);
   }
 
+  componentRe(target) {
+    return (
+      <target.target {...target.props} action={this.props.MODIFY_PLAYLIST} scrollTop={this.state.scrollTop}/>
+    );
+  }
+
   render () {
     return (
       <div className="index-wrap flex">
@@ -31,8 +40,13 @@ import ArtistAlbums from './artistAlbums';
                         e.persist();
                         this.scrollTopDebounce(e);
                       }} className="main-outter">
-          <ArtistAlbums action={this.props.MODIFY_PLAYLIST}
-           scrollTop={this.state.scrollTop} aid={101996}></ArtistAlbums>
+           <Router>
+             <Switch>
+              <Route exact path="/user/:uid" render={(props) => this.componentRe({target: UserPlayList, props: props})}></Route>
+              <Route path="/album" render={(props)=> this.componentRe({target: AlbumDetail, props: props})}></Route>
+              <Route path="/artist" render={(props)=> this.componentRe({target: ArtistAlbums, props: props})}></Route>
+             </Switch>
+           </Router>
         </div>
         <DoSome action={this.props.MODIFY_PLAYLIST}></DoSome>
       </div>

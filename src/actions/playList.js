@@ -8,20 +8,12 @@ let MODIFY_PLAYLIST = (value) => {
 
 let PLAY_INDEX = (index) => {
   return {
-    type: "PLAY_INDEX",
-    value: index
-  };
-};
-
-let FIXED_ID = (id) => {
-  return {
-    type: "FIXED_ID",
-    vlaue: id
+    type: 'PLAY_INDEX',
+    playIndex: index
   }
 }
 
 export default {
   MODIFY_PLAYLIST,
-  PLAY_INDEX,
-  FIXED_ID
+  PLAY_INDEX
 };

@@ -16,6 +16,8 @@ class ArtistAlbums extends React.Component {
       name: '',
       albumSize: 0
     }
+    
+    this.params = new URLSearchParams(this.props.location.search);
   }
   
   componentDidMount() {///artist/album
@@ -23,7 +25,7 @@ class ArtistAlbums extends React.Component {
   }
 
   async albumFetcher(limit, offset = 0) {
-    let artistAlbums = await axios.get(`http://${apiConfig.api}/artist/album?id=${this.props.aid}&limit=${limit}&offset=${offset}`); // 获取歌手专辑
+    let artistAlbums = await axios.get(`http://${apiConfig.api}/artist/album?id=${this.params.get('id')}&limit=${limit}&offset=${offset}`); // 获取歌手专辑
     this.setState({
       artistAlbums: offset !== 0 ? this.state.artistAlbums.concat(artistAlbums.data.hotAlbums) : artistAlbums.data.hotAlbums,
       name: artistAlbums.data.artist.name,
