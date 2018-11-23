@@ -5,8 +5,6 @@ import axios from 'axios';
 import "../styleSheet/oneList.scss";
 
 import apiConfig from "../apiConfig"; // import your api config
-import { off } from "rsvp";
-
 
 class List extends React.Component {
   constructor(props) {
@@ -63,16 +61,6 @@ class List extends React.Component {
       img: tracks.album.picUrl
     });
   }
-
-  isElementInViewport(el) {
-    var rect = el.getBoundingClientRect();
-    return (
-      rect.top >= 0 &&
-      rect.left >= 0 &&
-      rect.bottom <= (window.innerHeight || document. documentElement.clientHeight) &&
-      rect.right <= (window.innerWidth || document. documentElement.clientWidth)
-    );
-  }
   
   loadAllTracks() {
     if(this.state.viewAll) {
@@ -99,7 +87,7 @@ class List extends React.Component {
     return (
       <div ref={this.list} className="List-wrap flex">
         <div className="left flex-c j-start a-end">
-          <img src={this.props.img || this.state.img}></img>
+          <img alt={this.state.name} src={this.props.img || this.state.img}></img>
           {
             this.state.viewAll && <div ref={this.angle} className="float-less">
               <i onClick={()=>{this.backToThePlaceWhereTheAllBegin()}} style={this.state.viewAll && this.countAngleTop()} className="fas fa-angle-up angle"></i>
@@ -121,7 +109,7 @@ class List extends React.Component {
                       playList: this.state.visiableTRACKS,
                       playIndex: index
                     });
-                  }} key={item.id} dt={item.dt} trackName={item.name} id={item.id} ar={item.ar}></Track>)
+                  }} key={item.id} dt={item.dt} trackName={item.name} id={item.id} ar={item.ar} isAlbum={this.props.isAlbum}></Track>)
                 })
               }
               {

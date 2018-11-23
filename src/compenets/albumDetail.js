@@ -13,7 +13,7 @@ class AlbumDetail extends React.Component {
   render() {
     return (
       <div className="album-detail">
-        <List scrollTop={this.props.scrollTop} action={this.props.action} id={this.params.get('id')} isAlbum={true}></List>
+        <List scrollTop={this.props.scrollTop} action={this.props.action} id={this.props.match.params.id} isAlbum={true}></List>
       </div>
     )
   }

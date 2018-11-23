@@ -2,7 +2,7 @@ import React from "react";
 import "../styleSheet/doSome.css";
 
 import Input from './input';
-import List from './searchRes';
+import SearchResult from './searchRes';
 
 import axios from 'axios';
 import apiConfig from "../apiConfig";
@@ -23,49 +23,71 @@ import apiConfig from "../apiConfig";
         keyword: '',
         type: 0
       },
-      trackCount: 0,
+      count: 0,
     }
   }
 
   async searching(showMore = false ,keyword = this.state.searchingKeyWord) {
-    const resultSetter = (result, trackCount) =>{
-      this.setState({
-        result: showMore ? this.state.result.concat(result.data.result.songs) : result.data.result.songs,
-        searching: false,
-        trackCount: trackCount
-      });
+    const resultSetter = (result) =>{
+      if(this.state.searched.type === 1) {
+        this.setState({
+          result: showMore ? this.state.result.concat(result.result.songs) : result.result.songs,
+          searching: false,
+          trackCount: result.result.songCount
+        });
+      } else if (this.state.searched.type === 10) {
+        this.setState({
+          result: showMore ? this.state.result.concat(result.result.albums) : result.result.albums,
+          searching: false,
+          trackCount: result.result.albumCount
+        });
+      } else {
+        this.setState({
+          result: showMore ? this.state.result.concat(result.result.artists) : result.result.artists,
+          searching: false,
+          trackCount: result.result.artistCount
+        });
+      }
     };
 
     if(keyword) {
       this.setState({
         searching: true,
-        searched: {keyword: this.state.searchingKeyWord, type: this.state.type}
+        searched: {
+          type: this.state.type,
+          keyword: this.state.searchingKeyWord
+        }
       }, async ()=> {
         let result = await axios(`http://${apiConfig.api}/search?keyword=${keyword}&type=${this.state.type}&vendor=${this.state.vendor}&limit=${this.state.limit}&offset=${this.state.offset}`);
-        if(this.state.type === 1) {
-          resultSetter(result, result.data.result.songCount);
-        } else if(this.state.type === 10) {
-          resultSetter(result, result.data.result.albumCount);
-        }
-      });  
+        resultSetter(result.data);
+      });
     }
   }
 
   showMoreHandleer() {
+    (this.state.offset * this.state.limit) < this.state.count &&
     this.setState({
       offset: this.state.offset + 1
-    }, ()=> this.searching(true, this.state.searched));
+    }, ()=> this.searching(true, this.state.searched.keyword));
+  }
+
+  typeChange(type) {
+    this.setState({
+      type: type,
+      result: []
+    }, this.searching);
   }
 
   render() {
     return(
       <div className="do-some main-outter flex-c j-start">
         <div className="top-c">
-          <Input searchingKeyWord={this.state.searchingKeyWord} searched={this.state.searched} type={this.state.type} setState={this.setState.bind(this)} searching={this.searching.bind(this)}></Input>
-          <h2 className="curr-title">{this.state.searched.keyword ? `Search: ${this.state.searchingKeyWord}` : ''}</h2>
+          <Input searchingKeyWord={this.state.searchingKeyWord} searched={this.state.searched} type={this.state.type}
+          setState={this.setState.bind(this)} typeChange={this.typeChange.bind(this)} searching={this.searching.bind(this)} />
+          <h2 className="curr-title">{this.state.searched.keyword ? `Search: ${this.state.searched.key}` : ''}</h2>
         </div>
         <div className="result-container">
-          <List action={this.props.action} type={this.state.type} tracks={this.state.result}></List>
+          <SearchResult action={this.props.action} type={this.state.type} result={this.state.result}></SearchResult>
           {
             this.state.trackCount > 30 && // 搜索的结果数量大于 30 因为每页会显示30个结果
             this.state.searched.keyword && // 必须是搜索过的

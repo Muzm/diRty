@@ -35,21 +35,21 @@ import AlbumDetail from './albumDetail';
 
   render () {
     return (
+     <Router>
       <div className="index-wrap flex">
         <div onScroll={(e)=> {
                         e.persist();
                         this.scrollTopDebounce(e);
                       }} className="main-outter">
-           <Router>
-             <Switch>
+            <Switch>
               <Route exact path="/user/:uid" render={(props) => this.componentRe({target: UserPlayList, props: props})}></Route>
-              <Route path="/album" render={(props)=> this.componentRe({target: AlbumDetail, props: props})}></Route>
-              <Route path="/artist" render={(props)=> this.componentRe({target: ArtistAlbums, props: props})}></Route>
-             </Switch>
-           </Router>
+              <Route path="/album/:id" render={(props)=> this.componentRe({target: AlbumDetail, props: props})}></Route>
+              <Route path="/artist/:id" render={(props)=> this.componentRe({target: ArtistAlbums, props: props})}></Route>
+            </Switch>
         </div>
         <DoSome action={this.props.MODIFY_PLAYLIST}></DoSome>
       </div>
+     </Router>
     );
   }
 }

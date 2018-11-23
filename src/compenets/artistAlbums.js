@@ -4,7 +4,6 @@ import axios from 'axios';
 import apiConfig from "../apiConfig"; // import your api config
 
 import List from "./oneList";
-import { off } from 'rsvp';
 
 class ArtistAlbums extends React.Component {
   constructor(porps) {
@@ -20,12 +19,12 @@ class ArtistAlbums extends React.Component {
     this.params = new URLSearchParams(this.props.location.search);
   }
   
-  componentDidMount() {///artist/album
+  componentDidMount() {
     this.albumFetcher(5);
   }
 
   async albumFetcher(limit, offset = 0) {
-    let artistAlbums = await axios.get(`http://${apiConfig.api}/artist/album?id=${this.params.get('id')}&limit=${limit}&offset=${offset}`); // 获取歌手专辑
+    let artistAlbums = await axios.get(`http://${apiConfig.api}/artist/album?id=${this.props.match.params.id}&limit=${limit}&offset=${offset}`); // 获取歌手专辑
     this.setState({
       artistAlbums: offset !== 0 ? this.state.artistAlbums.concat(artistAlbums.data.hotAlbums) : artistAlbums.data.hotAlbums,
       name: artistAlbums.data.artist.name,

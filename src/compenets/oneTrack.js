@@ -1,5 +1,6 @@
 import React from "react";
 import "../styleSheet/oneTrack.css";
+import { Link } from 'react-router-dom';
 
 class Track extends React.Component {
   constructor(props) {
@@ -18,13 +19,16 @@ class Track extends React.Component {
     return (
       <li className="a-track flex">
         <div className="track no-wrap-eli" onClick={this.props.onClick} title={this.state.trackName}>
-            <span>{this.state.trackName}</span>
-          </div>
+          <span>{this.state.trackName}</span>
+        </div>
           
-          <div className="ar no-wrap-eli" title={this.state.ar[0].name}>
-            &nbsp;-&nbsp;
-            <span>{this.state.ar[0].name} &nbsp;</span>
-          </div>
+        <div className="ar no-wrap-eli" title={this.state.ar[0].name}>
+          &nbsp;-&nbsp;
+          {
+            !this.props.isAlbum &&
+            <Link to={`/artist/${this.state.ar[0].id}`}>{this.state.ar[0].name} &nbsp;</Link>
+          }
+        </div>
 
         <div title={this.state.duration} className="duration">{this.state.duration}</div>
       </li>

@@ -1,6 +1,4 @@
 import React from 'react';
-import { timer } from 'rxjs';
-
 
 class Input extends React.Component {
   constructor(props) {
@@ -24,17 +22,10 @@ class Input extends React.Component {
     }
   }
 
-  typer(type) {
-    this.props.setState({
-      type: type
-    });
-  }
-
   inputEnter(e) {
-    e.keyCode === 13 && //按下的回车键
-    this.props.searchingKeyWord !== this.props.searched.keyword || // keyword 或者 
-    this.props.type !== this.props.searched.type && // 搜索类型不一样
-    this.props.searching(); // 执行搜索
+    if (e.keyCode === 13 && (this.props.searchingKeyWord !== this.props.searched.keyword || this.props.type !== this.props.searched.type)) {
+      this.props.searching(); // 执行搜索
+    }
   }
 
   render() {
@@ -52,7 +43,7 @@ class Input extends React.Component {
           &nbsp;Is&nbsp;
           {
             this.state.types.map((item)=>
-              (<div key={item.name} onClick={() => this.props.setState({type: item.type})} 
+              (<div key={item.name} onClick={() => this.props.typeChange(item.type)}
                 className={`type-item ${this.props.type === item.type && 'active'}`}>
                 {item.name}
               </div>)
