@@ -1,5 +1,5 @@
 # diRty.
-### others is hell. 他人即地狱
+### Others is hell. 他人即地狱
 ### This project got ugly non-designed interface, prepare for it.
 ## Installing
 You need [diRty-api](https://github.com/Muzm/diRty-api) to run this project.
