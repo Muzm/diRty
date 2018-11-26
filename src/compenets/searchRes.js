@@ -2,14 +2,10 @@ import React from 'react';
 import Track from './oneTrack';
 
 import { Link } from 'react-router-dom';
-import { replaceResultTransformer } from 'common-tags';
+import { italic } from 'ansi-colors';
+import { timingSafeEqual } from 'crypto';
 
 class Result extends React.Component {
-  constructor(props) {
-    super(props);
-
-  }
-
   artistsResults() {
     return (
       this.props.result.map((item, index)=>{
@@ -25,6 +21,7 @@ class Result extends React.Component {
   }
 
   trackResults() {
+    console.log(this.props);
     return (
       this.props.result.map((item, index)=>{
         return (
@@ -57,13 +54,29 @@ class Result extends React.Component {
     );
   }
 
+  emptyResult() {
+    return (
+      <li style={{fontStyle: 'italic'}}>
+        Result is empty.
+      </li>
+    );
+  }
+
   useWhichOne() {
-    if (this.props.type === 1) {
-      return this.trackResults();
-    } else if(this.props.type === 10) {
-      return this.albumResults();
-    } else {
-      return this.artistsResults();
+    // // when search result is empty and current keyword equel to searched keyword show empty result text
+    let fn = (toReturn) => {
+      if(this.props.searching) {
+        return (<li style={{fontStyle: 'italic'}}>Searching</li>);
+      } else {
+        return this.props.searched.type === this.props.type && !this.props.result.length ? this.emptyResult() : toReturn.call(this);
+      }
+    }
+    if (this.props.type === 1 && this.props.searched.keyword) {
+      return fn(this.trackResults);
+    } else if(this.props.type === 10 && this.props.searched.keyword) {
+      return fn(this.albumResults);
+    } else if(this.props.type === 100 && this.props.searched.keyword) {
+      return fn(this.artistsResults);
     }
   }
 

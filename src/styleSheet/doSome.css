@@ -38,3 +38,8 @@ h2 {
   margin-top: .4rem;
   margin-bottom: .4rem;
 }
+
+.link {
+  color: blue;
+  text-decoration: none;
+}
