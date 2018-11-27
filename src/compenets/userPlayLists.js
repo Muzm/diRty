@@ -5,12 +5,16 @@ import apiConfig from "../apiConfig"; // import your api config
 
 import List from "./oneList";
 
+import errHandle from '../pinkyShiniybartster'; // error handle
+
 class UserPlayList extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      userPlayList: []
+      userPlayList: [],
+      timeout: false,
+      error: false
     }
   }
 
@@ -24,11 +28,11 @@ class UserPlayList extends React.Component {
         userPlayList: userPlayList.data.playlist
       });
     } catch(e) {
-      console.log(e);
+      errHandle.requstErrorHandle(e, this.setState.bind(this));
     }
   }
 
-  render() {
+  noErrorJSX() {
     return (
       <ul className="main-group flex-c">
         {this.state.userPlayList.map((item, index)=> {
@@ -41,6 +45,10 @@ class UserPlayList extends React.Component {
         })}
       </ul>
     );
+  }
+
+  render() {
+    return errHandle.statusVisible(this.state.timeout, this.state.error, this.noErrorJSX());
   }
 }
 

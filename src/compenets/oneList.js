@@ -6,6 +6,8 @@ import "../styleSheet/oneList.scss";
 
 import apiConfig from "../apiConfig"; // import your api config
 
+import errHandle from '../pinkyShiniybartster'; // error handle
+
 class List extends React.Component {
   constructor(props) {
     super(props);
@@ -18,7 +20,9 @@ class List extends React.Component {
       viewAll: false,
       trackCount: this.props.isAlbum ? this.props.size : 0,
       allFetched: false,
-      angle: {top: 0}
+      angle: {top: 0},
+      timeout: false,
+      error: false
     };
 
     this.angle = React.createRef();
@@ -50,7 +54,7 @@ class List extends React.Component {
         allFetched: limit === 'all' ? true : false
       });
     } catch(e) {
-      console.log(e);
+      errHandle.requstErrorHandle(e, this.setState.bind(this));
     }
   }
 
@@ -70,7 +74,7 @@ class List extends React.Component {
         img: tracks.album.picUrl
       });
     } catch(e) {
-      console.log(e);
+      errHandle.requstErrorHandle(e, this.setState.bind(this));
     }
   }
   
@@ -95,7 +99,7 @@ class List extends React.Component {
     this.loadAllTracks();
   }
 
-  render() {
+  noErrorJSX() {
     return (
       <div ref={this.list} className="List-wrap flex">
         <div className="left flex-c j-start a-end">
@@ -136,7 +140,11 @@ class List extends React.Component {
           </div>
         </div>
       </div>
-    )
+    );
+  }
+
+  render() {
+    return errHandle.statusVisible(this.state.timeout, this.state.error, this.noErrorJSX());
   }
 }
 

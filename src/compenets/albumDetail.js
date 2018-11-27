@@ -7,7 +7,6 @@ class AlbumDetail extends React.Component {
   constructor(props) {
     super(props);
 
-    this.params = new URLSearchParams(this.props.location.search);
   }
 
   render() {
