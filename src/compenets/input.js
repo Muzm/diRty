@@ -43,7 +43,9 @@ class Input extends React.Component {
           &nbsp;Is&nbsp;
           {
             this.state.types.map((item)=>
-              (<div key={item.name} onClick={() => this.props.typeChange(item.type)}
+              (<div 
+                key={item.name} 
+                onClick={() => this.props.typeChange(item.type)}
                 className={`type-item ${this.props.type === item.type && 'active'}`}>
                 {item.name}
               </div>)

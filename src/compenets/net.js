@@ -18,16 +18,22 @@ import apiConfig from "../apiConfig"; // import your api config
   }
 
   async componentDidMount() {
-    let netPlayList = await axios.get(`http://${apiConfig.api}/netList`);
+    try {
+      let netPlayList = await axios.get(`http://${apiConfig.api}/netList`, {
+        timeout: 5000
+      });
     
-    let data = netPlayList.data.playlist.tracks;
-    this.props.MODIFY_PLAYLIST(data);
-    this.setState({
-      playList: data,
-      songList: data.map((item, index) => (<Onetracks onClick={() => {
-        this.props.PLAY_INDEX(index);
-      }} key={index} name={item.name} id={item.id} ar={item.ar}></Onetracks>))
-    });
+      let data = netPlayList.data.playlist.tracks;
+      this.props.MODIFY_PLAYLIST(data);
+      this.setState({
+        playList: data,
+        songList: data.map((item, index) => (<Onetracks onClick={() => {
+          this.props.PLAY_INDEX(index);
+        }} key={index} name={item.name} id={item.id} ar={item.ar}></Onetracks>))
+      });
+    } catch(e) {
+      console.log(e);
+    }
   }
 
   render () {

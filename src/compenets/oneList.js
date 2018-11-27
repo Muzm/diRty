@@ -38,28 +38,40 @@ class List extends React.Component {
   }
 
   async trackFetcher(limit = 'all', offset = 0) {
-    let tracks = await axios.get(`http://${apiConfig.api}/listDetail?id=${this.state.id}&limit=${limit}&offset=${offset}`);
-    this.setState({
-      tracks: tracks.data.playlist.tracks,
-      trackCount: tracks.data.playlist.trackCount,
-      viewAll: limit === 'all' ? true : false,
-      visiableTRACKS: limit === 'all' ? tracks.data.playlist.tracks : tracks.data.playlist.tracks.slice(0, 10), // need fix
-      allFetched: limit === 'all' ? true : false
-    });
+    try {
+      let tracks = await axios.get(`http://${apiConfig.api}/listDetail?id=${this.state.id}&limit=${limit}&offset=${offset}`, {
+        timeout: 5000
+      });
+      this.setState({
+        tracks: tracks.data.playlist.tracks,
+        trackCount: tracks.data.playlist.trackCount,
+        viewAll: limit === 'all' ? true : false,
+        visiableTRACKS: limit === 'all' ? tracks.data.playlist.tracks : tracks.data.playlist.tracks.slice(0, 10), // need fix
+        allFetched: limit === 'all' ? true : false
+      });
+    } catch(e) {
+      console.log(e);
+    }
   }
 
   async albumDetailFetcher(limit = 'all', offset = 0) {
-    let tracks = (await axios.get(`http://${apiConfig.api}/albumDetail?id=${this.props.id}&limit=${limit}&offset=${offset}`)).data;
-    this.setState({
-      visiableTRACKS: tracks.songs,
-      tracks: tracks.songs,
-      trackCount: tracks.album.size,
-      publishTime: tracks.album.publishTime,
-      name: tracks.album.name,
-      viewAll: limit === 'all' ? true : false,
-      allFetched: limit === 'all' ? true : false,
-      img: tracks.album.picUrl
-    });
+    try {
+      let tracks = (await axios.get(`http://${apiConfig.api}/albumDetail?id=${this.props.id}&limit=${limit}&offset=${offset}`, {
+        timeout: 5000
+      })).data;
+      this.setState({
+        visiableTRACKS: tracks.songs,
+        tracks: tracks.songs,
+        trackCount: tracks.album.size,
+        publishTime: tracks.album.publishTime,
+        name: tracks.album.name,
+        viewAll: limit === 'all' ? true : false,
+        allFetched: limit === 'all' ? true : false,
+        img: tracks.album.picUrl
+      });
+    } catch(e) {
+      console.log(e);
+    }
   }
   
   loadAllTracks() {

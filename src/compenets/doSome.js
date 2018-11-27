@@ -6,7 +6,6 @@ import SearchResult from './searchRes';
 
 import axios from 'axios';
 import apiConfig from "../apiConfig";
-import { EmptyError } from "rxjs";
 
  class DoSome extends React.Component {
   constructor(props) {
@@ -28,19 +27,11 @@ import { EmptyError } from "rxjs";
     }
   }
 
-  async searching(showMore = false ,keyword = this.state.searchingKeyWord) {
+  searching(showMore = false ,keyword = this.state.searchingKeyWord) {
     
     const resultSetter = (result) =>{
       const res = result.result;
-      // set current searched keyword type
-      this.setState({
-        searching: false,
-        searched: {
-          type: this.state.type,
-          keyword: this.state.searchingKeyWord
-        }
-      });
-
+      this.setState({searching: false});
       // recording the type to save result
       let emptyResult = toReturn => toReturn || []; // in SearchResult Component this.props.result must be a array to map
       if(this.state.searched.type === 1) {
@@ -65,9 +56,23 @@ import { EmptyError } from "rxjs";
     };
 
     if(keyword) {
-      this.setState({searching: !showMore});
-      let result = await axios(`http://${apiConfig.api}/search?keyword=${keyword}&type=${this.state.type}&vendor=${this.state.vendor}&limit=${this.state.limit}&offset=${this.state.offset}`);
-      resultSetter(result.data);
+      // set current saerching keyword and type
+      this.setState({
+        searching: !showMore,
+        searched: {
+          type: this.state.type,
+          keyword: this.state.searchingKeyWord
+        }
+      }, async ()=> {
+        try {
+          let result = await axios(`http://${apiConfig.api}/search?keyword=${keyword}&type=${this.state.type}&vendor=${this.state.vendor}&limit=${this.state.limit}&offset=${this.state.offset}`,{
+            timeout: 5000
+          });
+          resultSetter(result.data);
+        } catch(e) {
+          console.log(e);
+        }
+      });
     }
   }
 
@@ -96,7 +101,7 @@ import { EmptyError } from "rxjs";
             setState={this.setState.bind(this)} 
             typeChange={this.typeChange.bind(this)}
             searching={this.searching.bind(this)}/>
-          <h2 className="curr-title">{this.state.searched.keyword ? `Result of ${this.state.searched.keyword}` : ''}</h2>
+          <h2 className="curr-title">{this.state.searched.keyword && !this.state.searching ? `Result of ${this.state.searched.keyword}` : ''}</h2>
         </div>
         <div className="result-container">
           <SearchResult

@@ -2,8 +2,6 @@ import React from 'react';
 import Track from './oneTrack';
 
 import { Link } from 'react-router-dom';
-import { italic } from 'ansi-colors';
-import { timingSafeEqual } from 'crypto';
 
 class Result extends React.Component {
   artistsResults() {
@@ -21,7 +19,6 @@ class Result extends React.Component {
   }
 
   trackResults() {
-    console.log(this.props);
     return (
       this.props.result.map((item, index)=>{
         return (
@@ -56,18 +53,18 @@ class Result extends React.Component {
 
   emptyResult() {
     return (
-      <li style={{fontStyle: 'italic'}}>
+      <li className="italic">
         Result is empty.
       </li>
     );
   }
 
   useWhichOne() {
-    // // when search result is empty and current keyword equel to searched keyword show empty result text
+    // when search result is empty and current keyword equel to searched keyword show empty result text
     let fn = (toReturn) => {
       if(this.props.searching) {
-        return (<li style={{fontStyle: 'italic'}}>Searching</li>);
-      } else {
+        return (<li className="italic">Searching</li>);
+      } else  {
         return this.props.searched.type === this.props.type && !this.props.result.length ? this.emptyResult() : toReturn.call(this);
       }
     }
