@@ -22,7 +22,7 @@ class List extends React.Component {
       allFetched: false,
       angle: {top: 0},
       timeout: false,
-      error: false
+      error: false,
     };
 
     this.angle = React.createRef();
@@ -31,6 +31,25 @@ class List extends React.Component {
 
   async componentDidMount() {
     this.props.isAlbum ? this.albumDetailFetcher(10) : this.trackFetcher(10);
+  }
+
+  componentWillReceiveProps(props) {
+    if(this.state.id !== props.id) {
+      this.setState({
+        id: props.id,
+        JSXTracks: [],
+        tracks: [],
+        visiableTRACKS: [],
+        viewAll: false,
+        trackCount: this.props.isAlbum ? this.props.size : 0,
+        allFetched: false,
+        angle: {top: 0},
+        timeout: false,
+        error: false
+      }, ()=> {
+        this.props.isAlbum ? this.albumDetailFetcher(10) : this.trackFetcher(10);
+      });
+    }
   }
 
   countAngleTop() {

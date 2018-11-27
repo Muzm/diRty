@@ -17,14 +17,27 @@ class ArtistAlbums extends React.Component {
       name: '',
       albumSize: 0,
       timeout: false,
-      error: false
+      error: false,
+      id: porps.match.params.id
     }
-    
-    this.params = new URLSearchParams(this.props.location.search);
   }
   
   componentDidMount() {
     this.albumFetcher(5);
+  }
+
+  componentWillReceiveProps(props) {
+    if(this.state.id !== props.match.params.id) {
+      this.setState({ // clear previous artist albums
+        artistAlbums: [],
+        offset: 0,
+        name: '',
+        albumSize: 0,
+        timeout: false,
+        error: false,
+        id: props.match.params.id
+      }, () => this.albumFetcher(5));
+    }
   }
 
   async albumFetcher(limit, offset = 0) {

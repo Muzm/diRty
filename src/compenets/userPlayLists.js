@@ -14,11 +14,16 @@ class UserPlayList extends React.Component {
     this.state = {
       userPlayList: [],
       timeout: false,
-      error: false
+      error: false,
+      id: props.id
     }
   }
 
   async componentDidMount() {
+    this.userPlayListFetcher();
+  }
+
+  async userPlayListFetcher() {
     try {
       let userPlayList = await axios.get(`http://${apiConfig.api}/userPlayList?uid=${this.props.match.params.uid}`, {
         timeout: 5000
@@ -29,6 +34,17 @@ class UserPlayList extends React.Component {
       });
     } catch(e) {
       errHandle.requstErrorHandle(e, this.setState.bind(this));
+    }
+  }
+
+  componentWillReceiveProps(props) {
+    if(this.state.id !== props.id) {
+      this.setState({
+        userPlayList: [],
+        timeout: false,
+        error: false,
+        id: props.id
+      }, this.userPlayListFetcher);
     }
   }
 
