@@ -21,8 +21,7 @@ class List extends React.Component {
       trackCount: this.props.isAlbum ? this.props.size : 0,
       allFetched: false,
       angle: {top: 0},
-      timeout: false,
-      error: false,
+      errorType: 0
     };
 
     this.angle = React.createRef();
@@ -163,7 +162,7 @@ class List extends React.Component {
   }
 
   render() {
-    return errHandle.statusVisible(this.state.timeout, this.state.error, this.noErrorJSX());
+    return errHandle.statusVisible(this.state.errorType, this.noErrorJSX())
   }
 }
 

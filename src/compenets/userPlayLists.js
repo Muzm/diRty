@@ -64,7 +64,7 @@ class UserPlayList extends React.Component {
   }
 
   render() {
-    return errHandle.statusVisible(this.state.timeout, this.state.error, this.noErrorJSX());
+    return errHandle.statusVisible(this.state.errorType, this.noErrorJSX())
   }
 }
 

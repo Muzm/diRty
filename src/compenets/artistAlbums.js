@@ -16,8 +16,7 @@ class ArtistAlbums extends React.Component {
       offset: 0,
       name: '',
       albumSize: 0,
-      timeout: false,
-      error: false,
+      errorType: 0,
       id: porps.match.params.id
     }
   }
@@ -86,7 +85,7 @@ class ArtistAlbums extends React.Component {
     return (
       <div>
         {
-          errHandle.statusVisible(this.state.timeout, this.state.error, this.noErrorJSX())
+          errHandle.statusVisible(this.state.errorType, this.noErrorJSX())
         }
       </div>
     );

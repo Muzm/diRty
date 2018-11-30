@@ -16,6 +16,7 @@ code {
   margin-bottom: 4rem;
   width: 70%;
   overflow: hidden;
+  min-width: 1344px;
 }
 
 .main-group {
