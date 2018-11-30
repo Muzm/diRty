@@ -8,9 +8,9 @@ class Result extends React.Component {
     return (
       this.props.result.map((item, index)=>{
         return (
-          <li className="flex" key={index}>
+          <li className="flex a-track" key={index}>
             <Link to={`/artist/${item.id}`}>
-              <div className="artist-name">{item.name}</div>
+              <div className="result-text">{item.name}</div>
             </Link>
           </li>
         );
@@ -37,13 +37,13 @@ class Result extends React.Component {
     return (
       this.props.result.map((item, index)=> {
         return (
-          <li className="flex" key={index}>
+          <li className="flex a-track" key={index}>
             <Link to={`/album/${item.id}`}>
-              <div>{item.name}</div>
+              <div className="result-text">{item.name}</div>
             </Link>
             &nbsp;-&nbsp;
             <Link to={`/artist/${item.artists[0].id}`}>
-              <div>{item.artists[0].name}</div>
+              <div className="result-text">{item.artists[0].name}</div>
             </Link>
           </li>
         );

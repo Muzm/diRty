@@ -3,6 +3,24 @@
   padding-bottom: 3px;
 }
 
+.do-some .track {
+  color: black;
+}
+
+.do-some .a-track:hover {
+  background: transparent;
+  color: black;
+}
+
+.do-some a {
+  text-decoration: none;
+}
+
+
+.do-some .ar.no-wrap-eli {
+  display: flex;
+}
+
 .result-container, .p-n-btn, .result-u {
   width: 100%;
 }
@@ -40,6 +58,15 @@ h2 {
 }
 
 .link {
-  color: blue;
+  color: black;
   text-decoration: none;
+}
+
+.result-text {
+  font-size: 14px;
+  color: black;
+}
+
+.under {
+  text-decoration: underline;
 }
