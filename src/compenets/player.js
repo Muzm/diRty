@@ -47,11 +47,11 @@ import apiConfig from "../apiConfig";// import your api config
     // const vendor = window.location.href.split('/').slice(-1).pop() === "net" ? "netease" : "xiami";
     try {
       const { id } = this.state.playList[this.state.playIndex] || {};
-      let url = id && await axios.get(`http://${apiConfig.api}/getSong?vendor=${"netease"}&id=${id}`, {
+      let url = id && await axios.get(`http://${apiConfig.api}/getSong?vendor=netease&id=${id}`, {
         timeout: 5000
       });
       this.setState({
-        urlOfCuurentSong: url.data.url
+        urlOfCuurentSong: url.data.data[0].url
       });
     } catch(e) {
       console.log(e);

@@ -4,11 +4,6 @@ import List from "./oneList";
 
 
 class AlbumDetail extends React.Component {
-  constructor(props) {
-    super(props);
-
-  }
-
   render() {
     return (
       <div className="album-detail">
