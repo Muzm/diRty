@@ -19,18 +19,16 @@ class Result extends React.Component {
   }
 
   trackResults() {
-    return (
-      this.props.result.map((item, index)=>{
-        return (
-          <Track onClick={()=> {
-            this.props.action({
-              playList: this.props.result,
-              playIndex: index
-            });
-          }} key={item.id} dt={item.duration} trackName={item.name} id={item.id} ar={item.artists}></Track>
-        );
-      })
-    );
+    return (this.props.result.map((item, index)=> {
+              return (
+                <Track onClick={()=> {
+                  this.props.action({
+                    playList: this.props.result,
+                    playIndex: index
+                  });
+                }} key={item.id} dt={item.duration} trackName={item.name} id={item.id} ar={item.artists}></Track>
+              );
+          }));
   }
   
   albumResults() {
@@ -38,12 +36,12 @@ class Result extends React.Component {
       this.props.result.map((item, index)=> {
         return (
           <li className="flex a-track" key={index}>
-            <Link to={`/album/${item.id}`}>
-              <div className="result-text">{item.name}</div>
+            <Link className="result-text" to={`/album/${item.id}`}>
+              {item.name}
             </Link>
             &nbsp;-&nbsp;
-            <Link to={`/artist/${item.artists[0].id}`}>
-              <div className="result-text">{item.artists[0].name}</div>
+            <Link className="result-text arar" to={`/artist/${item.artists[0].id}`}>
+              {item.artists[0].name}
             </Link>
           </li>
         );

@@ -8,6 +8,7 @@ import errHandle from '../pinkyShiniybartster'; // error handle
 
 import axios from 'axios';
 import apiConfig from "../apiConfig";
+import { timingSafeEqual } from "crypto";
 
  class DoSome extends React.Component {
   constructor(props) {
@@ -41,19 +42,19 @@ import apiConfig from "../apiConfig";
         this.setState({
           result: showMore ? this.state.result.concat(emptyResult(res.songs)) : emptyResult(res.songs),
           searching: false,
-          trackCount: res.songCount
+          count: res.songCount
         });
       } else if (this.state.searched.type === 10) {
         this.setState({
           result: showMore ? this.state.result.concat(emptyResult(res.albums)) : emptyResult(res.albums),
           searching: false,
-          trackCount: res.albumCount
+          count: res.albumCount
         });
       } else if(this.state.searched.type === 100) {
         this.setState({
           result: showMore ? this.state.result.concat(emptyResult(res.artists)) : emptyResult(res.artists),
           searching: false,
-          trackCount: res.artistCount
+          count: res.artistCount
         });
       }
     };
@@ -68,7 +69,7 @@ import apiConfig from "../apiConfig";
         }
       }, async ()=> {
         try {
-          let result = await axios(`http://${apiConfig.search}/search?keywords=${keyword}&type=${this.state.type}&vendor=${this.state.vendor}&limit=${this.state.limit}&offset=${this.state.offset}`, {
+          let result = await axios(`http://${apiConfig.search}/search?keywords=${keyword}&type=${this.state.type}&vendor=${this.state.vendor}&limit=${30}&offset=${this.state.offset * this.state.limit}`, {
             timeout: 5000
           });
           if(result.data) resultSetter(result.data); else this.setState({errorType: 2});
@@ -80,7 +81,7 @@ import apiConfig from "../apiConfig";
   }
 
   showMoreHandleer() {
-    (this.state.offset * this.state.limit) < this.state.trackCount &&
+    (this.state.offset * this.state.limit) < this.state.count &&
     this.setState({
       offset: this.state.offset + 1
     }, ()=> this.searching(true, this.state.searched.keyword));

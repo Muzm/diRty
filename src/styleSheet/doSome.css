@@ -65,6 +65,14 @@ h2 {
 .result-text {
   font-size: 14px;
   color: black;
+  white-space: nowrap;
+  max-width: 80%;
+  text-overflow:ellipsis;
+  overflow:hidden;
+}
+
+.arar {
+  max-width: 20%;
 }
 
 .under {
