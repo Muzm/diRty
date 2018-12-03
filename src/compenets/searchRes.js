@@ -49,6 +49,18 @@ class Result extends React.Component {
     );
   }
 
+  userResults() {
+    return (
+      this.props.result.map((item, index)=>{
+        return (
+          <li className="flex a-track" key={index}>
+            <Link className="result-text" to={`/user/${item.userId}`}>{item.nickname}</Link>
+          </li>
+        );
+      }) 
+    );
+  }
+
   emptyResult() {
     return (
       <li className="italic">
@@ -64,14 +76,18 @@ class Result extends React.Component {
         return (<li className="italic">Searching</li>);
       } else  {
         return this.props.searched.type === this.props.type && !this.props.result.length ? this.emptyResult() : toReturn.call(this);
+        //     当前搜索过的类型	              用户现在选择的类型	  没有结果                  
       }
     }
+
     if (this.props.type === 1 && this.props.searched.keyword) {
       return fn(this.trackResults);
     } else if(this.props.type === 10 && this.props.searched.keyword) {
       return fn(this.albumResults);
     } else if(this.props.type === 100 && this.props.searched.keyword) {
       return fn(this.artistsResults);
+    } else if(this.props.type === 1002 && this.props.searched.keyword) {
+      return fn(this.userResults);
     }
   }
 

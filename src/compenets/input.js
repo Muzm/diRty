@@ -17,6 +17,10 @@ class Input extends React.Component {
         {
           name: 'Artist',
           type: 100
+        },
+        {
+          name: 'User',
+          type: 1002
         }
       ]
     }
@@ -44,7 +48,7 @@ class Input extends React.Component {
           {
             this.state.types.map((item)=>
               (<div 
-                key={item.name} 
+                key={item.name}
                 onClick={() => this.props.typeChange(item.type)}
                 className={`type-item ${this.props.type === item.type && 'active'}`}>
                 {item.name}

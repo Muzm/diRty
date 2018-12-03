@@ -15,7 +15,7 @@ class UserPlayList extends React.Component {
       userPlayList: [],
       timeout: false,
       error: false,
-      id: props.id
+      id: props.match.params.uid
     }
   }
 
@@ -38,7 +38,7 @@ class UserPlayList extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    if(this.state.id !== props.id) {
+    if(this.state.id !== props.match.params.uid) {
       this.setState({
         userPlayList: [],
         timeout: false,

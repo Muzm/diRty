@@ -35,28 +35,31 @@ import { timingSafeEqual } from "crypto";
     
     const resultSetter = (result) =>{
       const res = result.result;
-      this.setState({searching: false});
-      // recording the type to save result
-      let emptyResult = toReturn => toReturn || []; // in SearchResult Component this.props.result must be a array to map
+      const isEmptyResult = toReturn => toReturn || []; // in SearchResult Component this.props.result must be a array to map
+
+      let toSetResult = null;
+      let toSetSearchState = false;
+      let toSetCount = 0;
+      
       if(this.state.searched.type === 1) {
-        this.setState({
-          result: showMore ? this.state.result.concat(emptyResult(res.songs)) : emptyResult(res.songs),
-          searching: false,
-          count: res.songCount
-        });
+        toSetCount = res.songCount;
+        toSetResult = showMore ? this.state.result.concat(isEmptyResult(res.songs)) : isEmptyResult(res.songs);
       } else if (this.state.searched.type === 10) {
-        this.setState({
-          result: showMore ? this.state.result.concat(emptyResult(res.albums)) : emptyResult(res.albums),
-          searching: false,
-          count: res.albumCount
-        });
+        toSetCount = res.albumCount;
+        toSetResult = showMore ? this.state.result.concat(isEmptyResult(res.albums)) : isEmptyResult(res.albums);
       } else if(this.state.searched.type === 100) {
-        this.setState({
-          result: showMore ? this.state.result.concat(emptyResult(res.artists)) : emptyResult(res.artists),
-          searching: false,
-          count: res.artistCount
-        });
+        toSetCount = res.artistCount;
+        toSetResult = showMore ? this.state.result.concat(isEmptyResult(res.artists)) : isEmptyResult(res.artists);
+      } else if(this.state.searched.type === 1002) {
+        toSetCount = res.userprofileCount;
+        toSetResult = showMore ? this.state.result.concat(isEmptyResult(res.userprofiles)) : isEmptyResult(res.userprofiles);
       }
+
+      this.setState({
+        result: toSetResult,
+        count: toSetCount,
+        searching: toSetSearchState
+      });
     };
 
     if(keyword) {
@@ -96,14 +99,13 @@ import { timingSafeEqual } from "crypto";
 
   goodStatusJSX() {
     return (
-      
-          <SearchResult
-            action={this.props.action}
-            searching={this.state.searching}
-            searched={this.state.searched}
-            type={this.state.type}
-            result={this.state.result}></SearchResult>
-          
+    <SearchResult
+      action={this.props.action}
+      searching={this.state.searching}
+      searched={this.state.searched}
+      type={this.state.type}
+      result={this.state.result}>
+    </SearchResult>
     )
   }
 
