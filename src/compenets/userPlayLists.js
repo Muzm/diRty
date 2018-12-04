@@ -15,7 +15,8 @@ class UserPlayList extends React.Component {
       userPlayList: [],
       timeout: false,
       error: false,
-      id: props.match.params.uid
+      id: props.match.params.uid,
+      isHomePage: localStorage.getItem('home_id') === this.props.match.params.uid
     }
   }
 
@@ -48,18 +49,29 @@ class UserPlayList extends React.Component {
     }
   }
 
+  setAsHomePage() {
+    localStorage.setItem('home_id', this.state.id);
+    this.setState({isHomePage: true});
+  }
+
   noErrorJSX() {
     return (
-      <ul className="main-group flex-c">
-        {this.state.userPlayList.map((item, index)=> {
-          return (
-            <li key={index}>
-              <List scrollTop={this.props.scrollTop} name={item.name} 
-              img={item.coverImgUrl} id={item.id} action={this.props.action}></List>
-            </li>
-          );
-        })}
-      </ul>
+      <div className="flex-c">
+        <div className="fix-this-user flex">
+          <div className="fix" onClick={this.setAsHomePage.bind(this)}>{this.state.isHomePage ? 'Home now' : 'Set as home page'}</div>
+          <i onClick={this.setAsHomePage.bind(this)} className={`fas ${this.state.isHomePage ? 'fa-kiss-wink-heart' : 'fa-meh'}`}></i>
+        </div>
+        <ul className="main-group flex-c">
+          {this.state.userPlayList.map((item, index)=> {
+            return (
+              <li key={index}>
+                <List scrollTop={this.props.scrollTop} name={item.name} 
+                img={item.coverImgUrl} id={item.id} action={this.props.action}></List>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     );
   }
 

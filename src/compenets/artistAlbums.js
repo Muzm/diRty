@@ -58,27 +58,28 @@ class ArtistAlbums extends React.Component {
 
   noErrorJSX() {
     return (
-    <div>
-      <h2 className='italic'>{this.state.name}'s Albums <span className="totle-album">Total {this.state.albumSize} albums</span></h2>
-      <ul className="main-group flex-c">
-        {this.state.artistAlbums.map((item, index)=> {
-          return (
-            <li key={index}>
-              <List scrollTop={this.props.scrollTop} name={item.name}
-              img={item.picUrl} id={item.id} action={this.props.action} isAlbum={true}></List>
-            </li>
-          );
-        })}
-        {
-          this.state.offset * 5 < this.state.albumSize && 
-          (<li onClick={()=>{this.albumFetcher(5, this.state.offset + 1)}} className="a-track view-all-wap flex j-center">
-            <div className="view-all">
-              {`View more albums`}
-            </div>
-          </li>)
-        }
-      </ul>
-    </div>)
+      <div>
+        <h2 className='italic'>{this.state.name}'s EP and Albums <span className="totle-album">Total {this.state.albumSize} lists</span></h2>
+        <ul className="main-group flex-c">
+          {this.state.artistAlbums.map((item, index)=> {
+            return (
+              <li key={index}>
+                <List scrollTop={this.props.scrollTop} name={item.name}
+                img={item.picUrl} id={item.id} action={this.props.action} isAlbum={true}></List>
+              </li>
+            );
+          })}
+          {
+            this.state.offset * 5 < this.state.albumSize && 
+            (<li onClick={()=>{this.albumFetcher(5, this.state.offset + 1)}} className="a-track view-all-wap flex j-center">
+              <div className="view-all">
+                {`View more albums`}
+              </div>
+            </li>)
+          }
+        </ul>
+      </div>
+    )
   }
 
   render() {

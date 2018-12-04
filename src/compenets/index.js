@@ -5,7 +5,7 @@ import "../styleSheet/index.css";
 import DoSome from "./doSome";
 import debounce from 'lodash.debounce';
 
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect, Link } from "react-router-dom";
 
 import UserPlayList from './userPlayLists';
 import ArtistAlbums from './artistAlbums';
@@ -37,6 +37,9 @@ import AlbumDetail from './albumDetail';
     return (
      <Router>
       <div className="index-wrap flex">
+        <Link to="/" className="goHome flex j-center a-center">
+          <i className="fas fa-dove"></i>
+        </Link>
         <div onScroll={(e)=> {
                         e.persist();
                         this.scrollTopDebounce(e);
@@ -45,6 +48,7 @@ import AlbumDetail from './albumDetail';
               <Route exact path="/user/:uid" render={(props) => this.componentRe({target: UserPlayList, props: props})}></Route>
               <Route path="/album/:id" render={(props)=> this.componentRe({target: AlbumDetail, props: props})}></Route>
               <Route path="/artist/:id" render={(props)=> this.componentRe({target: ArtistAlbums, props: props})}></Route>
+              <Route exact path="/" render={() => (<Redirect to={`/user/${localStorage.getItem('home_id') || '348024701' }`}></Redirect>)}></Route> 
             </Switch>
         </div>
         <DoSome action={this.props.MODIFY_PLAYLIST}></DoSome>

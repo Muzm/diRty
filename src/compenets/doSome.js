@@ -8,7 +8,6 @@ import errHandle from '../pinkyShiniybartster'; // error handle
 
 import axios from 'axios';
 import apiConfig from "../apiConfig";
-import { timingSafeEqual } from "crypto";
 
  class DoSome extends React.Component {
   constructor(props) {

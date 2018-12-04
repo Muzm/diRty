@@ -32,3 +32,55 @@ code {
   overflow-x: hidden; 
   width: 50%;
 }
+
+.fix-this-user {
+  justify-content: flex-start;
+  height: 100%;
+  /* padding: 0 8px; */
+}
+
+.fix {
+  box-sizing: border-box;
+  cursor: pointer;
+  height: 100%;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.fix-this-user .fas {
+  margin-left: 8px;
+  height: 100%;
+  font-size: 23px;
+  cursor: pointer;
+  transition: .4s color ease; 
+}
+
+.fa-kiss-wink-heart {
+  color: orange;
+}
+
+.fa-meh {
+  color: darkblue;
+}
+
+.fix:hover {
+  border-bottom: 2px solid black;
+}
+
+.goHome {
+  position: fixed;
+  height: 32px;
+  width: 32px;
+  top: 0;
+  margin-left: -32px;
+}
+
+.goHome:hover {
+  background-color: #d6d6d6;
+  border-radius: 0 0 0 10%;
+  cursor: pointer;
+}
+
+.goHome .fas {
+  font-size: 16px;
+}
