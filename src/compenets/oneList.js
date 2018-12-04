@@ -78,7 +78,7 @@ class List extends React.Component {
 
   async albumDetailFetcher(limit = 'all', offset = 0) {
     try {
-      let tracks = (await axios.get(`http://${apiConfig.api}/albumDetail?id=${this.props.id}&limit=${limit}&offset=${offset}`, {
+      let tracks = (await axios.get(`http://${apiConfig.api}/albumDetail?id=${this.state.id}&limit=${limit}&offset=${offset}`, {
         timeout: 5000
       })).data;
       this.setState({

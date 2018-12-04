@@ -16,7 +16,7 @@ class UserPlayList extends React.Component {
       timeout: false,
       error: false,
       id: props.match.params.uid,
-      isHomePage: localStorage.getItem('home_id') === this.props.match.params.uid
+      isHomePage: localStorage.getItem('home_id') === props.match.params.uid
     }
   }
 
@@ -44,6 +44,7 @@ class UserPlayList extends React.Component {
         userPlayList: [],
         timeout: false,
         error: false,
+        isHomePage: localStorage.getItem('home_id') === props.match.params.uid,
         id: props.match.params.uid
       }, this.userPlayListFetcher);
     }
