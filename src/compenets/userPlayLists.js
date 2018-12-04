@@ -44,7 +44,7 @@ class UserPlayList extends React.Component {
         userPlayList: [],
         timeout: false,
         error: false,
-        id: props.id
+        id: props.match.params.uid
       }, this.userPlayListFetcher);
     }
   }
