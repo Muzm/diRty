@@ -3,7 +3,9 @@ import "../styleSheet/audio.scss";
 import { connect } from "react-redux";
 import axios from "axios";
 
-import action from "../actions/playList";
+import { SET_CURRENT_TIME } from "../actions/lyric";
+import platListAction from '../actions/playList'
+import Lyric from './lyric'
 
 import apiConfig from "../apiConfig";// import your api config
 
@@ -91,13 +93,14 @@ import apiConfig from "../apiConfig";// import your api config
         <button onClick={()=>{this.previousSong()}}>Previous</button>
         <button onClick={()=>{this.nextSong()}}>Next</button>
         <div className="p-wraper flex f-start a-start">
-          <audio ref={this.audio} src={this.state.urlOfCuurentSong} muted={this.muted} onEnded={() => this.nextSong()} autoPlay controls>
+          <audio ref={this.audio} src={this.state.urlOfCuurentSong} muted={this.muted} onEnded={() => this.nextSong()} onTimeUpdate={() => this.props.onTimeUpdate(this.audio.current)} autoPlay controls>
             Your browser does not support the <code>audio</code> element.
           </audio>
         </div>
         <div className="v-control" ref={this.volumeSilde} onClick={this.volumeMap}>
           <div className="dot" style={{left: this.state.dotLeft}}></div>
         </div>
+        <Lyric />
       </div>
     );
   }
@@ -110,8 +113,17 @@ let fetchPlayList = (store) => {
   };
 }
 
+const mapDispathToProps = (dispath) => ({
+  onTimeUpdate: audio => {
+    dispath(SET_CURRENT_TIME(audio.currentTime))
+  },
+  PLAY_INDEX: index => {
+    dispath(platListAction.PLAY_INDEX(index))
+  }
+})
+
 // export default Player;
 export default connect(
   fetchPlayList,
-  action
+  mapDispathToProps
 )(Player);
