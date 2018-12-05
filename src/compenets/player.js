@@ -100,7 +100,7 @@ import apiConfig from "../apiConfig";// import your api config
         <div className="v-control" ref={this.volumeSilde} onClick={this.volumeMap}>
           <div className="dot" style={{left: this.state.dotLeft}}></div>
         </div>
-        <Lyric />
+        {/* <Lyric /> */}
       </div>
     );
   }

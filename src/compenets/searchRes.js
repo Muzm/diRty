@@ -9,8 +9,8 @@ class Result extends React.Component {
       this.props.result.map((item, index)=>{
         return (
           <li className="flex a-track" key={index}>
-            <Link to={`/artist/${item.id}`}>
-              <div className="result-text">{item.name}</div>
+            <Link className="result-text" to={`/artist/${item.id}`}>
+              {item.name}
             </Link>
           </li>
         );
