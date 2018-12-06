@@ -62,7 +62,7 @@ class List extends React.Component {
   async trackFetcher(limit = 'all', offset = 0) {
     try {
       let tracks = await axios.get(`http://${apiConfig.api}/listDetail?id=${this.state.id}&limit=${limit}&offset=${offset}`, {
-        timeout: 10000
+        timeout: 20000
       });
       this.setState({
         tracks: tracks.data.playlist.tracks,
@@ -79,7 +79,7 @@ class List extends React.Component {
   async albumDetailFetcher(limit = 'all', offset = 0) {
     try {
       let tracks = (await axios.get(`http://${apiConfig.api}/albumDetail?id=${this.state.id}&limit=${limit}&offset=${offset}`, {
-        timeout: 10000
+        timeout: 20000
       })).data;
       this.setState({
         visiableTRACKS: tracks.songs,
