@@ -20,7 +20,7 @@ import apiConfig from "../apiConfig"; // import your api config
   async componentDidMount() {
     try {
       let netPlayList = await axios.get(`http://${apiConfig.api}/netList`, {
-        timeout: 5000
+        timeout: 10000
       });
     
       let data = netPlayList.data.playlist.tracks;

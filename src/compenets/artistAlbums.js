@@ -43,7 +43,7 @@ class ArtistAlbums extends React.Component {
     try {
       // get artist aulbums
       let artistAlbums = await axios.get(`http://${apiConfig.api}/artist/album?id=${this.props.match.params.id}&limit=${limit}&offset=${offset}`,{
-        timeout: 5000
+        timeout: 10000
       }); 
       this.setState({
         artistAlbums: offset !== 0 ? this.state.artistAlbums.concat(artistAlbums.data.hotAlbums) : artistAlbums.data.hotAlbums,

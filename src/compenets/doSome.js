@@ -72,7 +72,7 @@ import apiConfig from "../apiConfig";
       }, async ()=> {
         try {
           let result = await axios(`http://${apiConfig.search}/search?keywords=${keyword}&type=${this.state.type}&vendor=${this.state.vendor}&limit=${30}&offset=${this.state.offset * this.state.limit}`, {
-            timeout: 5000
+            timeout: 10000
           });
           if(result.data) resultSetter(result.data); else this.setState({errorType: 2});
         } catch(e) {

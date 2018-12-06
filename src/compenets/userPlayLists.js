@@ -27,7 +27,7 @@ class UserPlayList extends React.Component {
   async userPlayListFetcher() {
     try {
       let userPlayList = await axios.get(`http://${apiConfig.api}/userPlayList?uid=${this.props.match.params.uid}`, {
-        timeout: 5000
+        timeout: 10000
       });
 
       this.setState({
