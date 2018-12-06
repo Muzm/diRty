@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from "axios";
+import apiConfig from '../apiConfig';
 
 
 class Lyric extends Component {
@@ -57,7 +58,7 @@ class Lyric extends Component {
     }
 
     async lyricGetter(id, callback) {
-        const { data: {lrc: { lyric }} } = await axios.get(`http://127.0.0.1:3002/lyric?id=${id}`)
+        const { data: {lrc: { lyric }} } = await axios.get(`http://${apiConfig.search}/lyric?id=${id}`)
         let finalLyric = []
         lyric.split("\n").forEach(item => {
             let t = item.match(/(?<=\[)\d{2}\:\d{2}\.\d{2}(?=\])/g)
