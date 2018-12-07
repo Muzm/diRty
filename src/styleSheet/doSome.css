@@ -1,5 +1,5 @@
 .do-some {
-  background-color: brown;
+  background-color: #ffdf7f;
   padding-bottom: 3px;
 }
 
@@ -39,12 +39,24 @@
   cursor: pointer;
 }
 
+.input-c-wrap > input {
+  border: none;
+  border-bottom: 1px solid #000;
+  font-size: 14px;
+  background: none;
+}
+
 .type-item {
   cursor: pointer;
+  opacity: .4;
 }
 
 .type-item.active {
-  color: blue;
+  opacity: 1;
+  font-weight: bold;
+}
+.type-item + .type-item {
+  margin-left: 6px;
 }
 
 h2 {
