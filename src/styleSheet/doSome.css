@@ -59,7 +59,7 @@ button:focus {
 
 .type-item {
   cursor: pointer;
-  opacity: .4;
+  opacity: .6;
 }
 
 .type-item.active {
