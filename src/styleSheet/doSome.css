@@ -1,3 +1,10 @@
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
 .do-some {
   background-color: brown;
   padding-bottom: 3px;
@@ -44,6 +51,10 @@
   border-bottom: 1px solid #000;
   font-size: 14px;
   background: none;
+}
+
+::placeholder { /* Most modern browsers support this now. */
+  color: black;
 }
 
 .type-item {
