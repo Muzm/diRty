@@ -91,8 +91,8 @@ import apiConfig from "../apiConfig";// import your api config
     return (
       <div className="player flex j-center a-center">
       <div class="flex-c a-end ok">
-        <div onClick={()=>{this.previousSong()}}>Previous</div>
-        <div onClick={()=>{this.nextSong()}}>Next</div>
+        <div onClick={()=>{this.state.playList && this.previousSong()}}>Previous</div>
+        <div onClick={()=>{this.state.playList && this.nextSong()}}>Next</div>
       </div>
         
         <div className="p-wraper flex f-start a-start">
