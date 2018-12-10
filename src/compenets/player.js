@@ -27,13 +27,13 @@ import apiConfig from "../apiConfig";// import your api config
       autoPlay: false
     };
 
-    this.volumeSilde = React.createRef();
-    this.volumeMap = this.volumeMap.bind(this);
+    // this.volumeSilde = React.createRef();
     this.audio = React.createRef();
+    // this.dot = React.createRef();
   }
 
   async componentDidMount() {
-    this.setState({dotLeft: this.state.volume * this.volumeSilde.current.offsetWidth});
+    // this.setState({dotLeft: this.state.volume * this.volumeSilde.current.offsetWidth});
     this.audio.current.volume = this.state.volume;
   }
 
@@ -90,15 +90,21 @@ import apiConfig from "../apiConfig";// import your api config
   render () {
     return (
       <div className="player flex j-center a-center">
-        <button onClick={()=>{this.previousSong()}}>Previous</button>
-        <button onClick={()=>{this.nextSong()}}>Next</button>
+      <div class="flex-c a-end ok">
+        <div onClick={()=>{this.previousSong()}}>Previous</div>
+        <div onClick={()=>{this.nextSong()}}>Next</div>
+      </div>
+        
         <div className="p-wraper flex f-start a-start">
-          <audio ref={this.audio} src={this.state.urlOfCuurentSong} muted={this.muted} onEnded={() => this.nextSong()} onTimeUpdate={() => this.props.onTimeUpdate(this.audio.current)} autoPlay controls>
+          <audio 
+            ref={this.audio} 
+            src={this.state.urlOfCuurentSong} 
+            muted={this.muted} onEnded={() => this.nextSong()} 
+            onTimeUpdate={() => this.props.onTimeUpdate(this.audio.current)} 
+            autoPlay 
+            controls>
             Your browser does not support the <code>audio</code> element.
           </audio>
-        </div>
-        <div className="v-control" ref={this.volumeSilde} onClick={this.volumeMap}>
-          <div className="dot" style={{left: this.state.dotLeft}}></div>
         </div>
         {/* <Lyric /> */}
       </div>

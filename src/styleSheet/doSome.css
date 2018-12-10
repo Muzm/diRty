@@ -66,6 +66,7 @@ button:focus {
   opacity: 1;
   font-weight: bold;
 }
+
 .type-item + .type-item {
   margin-left: 6px;
 }
