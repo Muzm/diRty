@@ -95,18 +95,18 @@ import apiConfig from "../apiConfig";// import your api config
         <div onClick={()=>{this.state.playList && this.nextSong()}}>Next</div>
       </div>
         
-        <div className="p-wraper flex f-start a-start">
-          <audio 
-            ref={this.audio} 
-            src={this.state.urlOfCuurentSong} 
-            muted={this.muted} onEnded={() => this.nextSong()} 
-            onTimeUpdate={() => this.props.onTimeUpdate(this.audio.current)} 
-            autoPlay 
-            controls>
-            Your browser does not support the <code>audio</code> element.
-          </audio>
-        </div>
-        {/* <Lyric /> */}
+      <div className="p-wraper flex f-start a-start">
+        <audio 
+          ref={this.audio} 
+          src={this.state.urlOfCuurentSong} 
+          muted={this.muted} onEnded={() => this.nextSong()} 
+          onTimeUpdate={() => this.props.onTimeUpdate(this.audio.current)} 
+          autoPlay 
+          controls>
+          Your browser does not support the <code>audio</code> element.
+        </audio>
+      </div>
+      {/* <Lyric /> */}
       </div>
     );
   }
