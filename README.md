@@ -1,5 +1,5 @@
 # diRty.
-### I'm king of spain. I Smelling to myself. I'm laughinh out loud. I'll never cry again.
+### I'm king of spain. I smilin' to myself. I'm laughin' out loud. I'll never cry again.
 ### This project got ugly non-designed interface, prepare for it.
 ## Installing
 You need [diRty-api](https://github.com/Muzm/diRty-api) to run this project.
