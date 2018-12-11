@@ -7,6 +7,7 @@ import "../styleSheet/oneList.scss";
 import apiConfig from "../apiConfig"; // import your api config
 
 import errHandle from '../pinkyShiniybartster'; // error handle
+import Loading from './loading';
 
 class List extends React.Component {
   constructor(props) {
@@ -21,7 +22,9 @@ class List extends React.Component {
       trackCount: this.props.isAlbum ? this.props.size : 0,
       allFetched: false,
       angle: {top: 0},
-      errorType: 0
+      errorType: 0,
+      loading: false,
+      viweAllLoading: false
     };
 
     this.angle = React.createRef();
@@ -29,6 +32,7 @@ class List extends React.Component {
   }
 
   async componentDidMount() {
+    this.setState({loading: true});
     this.props.isAlbum ? this.albumDetailFetcher(10) : this.trackFetcher(10);
   }
 
@@ -44,7 +48,9 @@ class List extends React.Component {
         allFetched: false,
         angle: {top: 0},
         timeout: false,
-        error: false
+        error: false,
+        loading: true,
+        viewAllLoading: false
       }, ()=> {
         this.props.isAlbum ? this.albumDetailFetcher(10) : this.trackFetcher(10);
       });
@@ -69,7 +75,9 @@ class List extends React.Component {
         trackCount: tracks.data.playlist.trackCount,
         viewAll: limit === 'all' ? true : false,
         visiableTRACKS: limit === 'all' ? tracks.data.playlist.tracks : tracks.data.playlist.tracks.slice(0, 10), // need fix
-        allFetched: limit === 'all' ? true : false
+        allFetched: limit === 'all' ? true : false,
+        loading: false,
+        viewAllLoading: limit === 'all' ? false : this.state.viewAllLoading
       });
     } catch(e) {
       errHandle.requstErrorHandle(e, this.setState.bind(this));
@@ -87,9 +95,11 @@ class List extends React.Component {
         trackCount: tracks.album.size,
         publishTime: tracks.album.publishTime,
         name: tracks.album.name,
-        viewAll: limit === 'all' ? true : false,
-        allFetched: limit === 'all' ? true : false,
-        img: tracks.album.picUrl
+        viewAll: limit === 'all',
+        allFetched: limit === 'all',
+        img: tracks.album.picUrl,
+        loading: false,
+        viewAllLoading: limit === 'all' ? false : this.state.viewAllLoading
       });
     } catch(e) {
       errHandle.requstErrorHandle(e, this.setState.bind(this));
@@ -100,14 +110,15 @@ class List extends React.Component {
     if(this.state.viewAll) {
       this.setState({
         visiableTRACKS: this.state.tracks.slice(0, 10), 
-        viewAll: false
+        viewAll: false,
       }, ()=> this.list.current.scrollIntoView());
     } else if(this.state.allFetched) {
       this.setState({
         visiableTRACKS: this.state.tracks,
-        viewAll: true
+        viewAll: true,
       });
     } else {
+      this.setState({viewAllLoading: true});
       this.props.isAlbum ? this.albumDetailFetcher('all') : this.trackFetcher('all');
     }
   }
@@ -115,6 +126,46 @@ class List extends React.Component {
   backToThePlaceWhereTheAllBegin () {
     this.setState({angleMove: false});
     this.loadAllTracks();
+  }
+
+  displayTracks() { // display tracks
+    let tracks = this.state.visiableTRACKS.map((item, index) => {
+      return (<Track onClick={()=> {
+        this.props.action({
+          playList: this.state.visiableTRACKS,
+          playIndex: index
+        });
+      }} key={item.id} dt={item.dt} trackName={item.name} id={item.id} ar={item.ar} isAlbum={this.props.isAlbum}></Track>)
+    });
+    if(this.state.trackCount > 10) tracks.push(this.showAll());
+    return tracks;
+  }
+
+  showAll() { // Show all button control aka View TrackCount tracks
+    let toRender;
+    if(this.state.viewAllLoading) {
+      toRender = (<Loading width="50px"/>);
+    } else {
+      toRender = this.state.viewAll ? "Viwe less tracks" : `View ${this.state.trackCount} tracks`
+    }
+
+    return (<li key="More" onClick={()=>{this.loadAllTracks()}} className={ `${!this.state.viewAllLoading && 'a-track'} view-all-wap flex j-center`}>
+            <div className="view-all">
+              {toRender}
+            </div>
+          </li>);
+  }
+
+  loading() {
+    return (
+      <li style={{
+        width: '100%',
+        height: '100%',
+        position: 'relative'
+      }}>
+        <Loading width="120px"/>
+      </li>
+    );
   }
 
   noErrorJSX() {
@@ -137,22 +188,9 @@ class List extends React.Component {
           <div className="right-bottom">
             <ul>
               {
-                this.state.visiableTRACKS.map((item, index) => {
-                  return (<Track onClick={()=> {
-                    this.props.action({
-                      playList: this.state.visiableTRACKS,
-                      playIndex: index
-                    });
-                  }} key={item.id} dt={item.dt} trackName={item.name} id={item.id} ar={item.ar} isAlbum={this.props.isAlbum}></Track>)
-                })
-              }
-              {
-                this.state.trackCount > 10 && 
-                (<li onClick={()=>{this.loadAllTracks()}} className="a-track view-all-wap flex j-center">
-                  <div className="view-all">
-                    {this.state.viewAll ? "Viwe less tracks" : `View ${this.state.trackCount || "loading"} tracks`}
-                  </div>
-                </li>)
+                this.state.loading ? 
+                this.loading() : 
+                this.displayTracks()
               }
             </ul>
           </div>

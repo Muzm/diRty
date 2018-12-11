@@ -5,7 +5,6 @@ import axios from "axios";
 
 import { SET_CURRENT_TIME } from "../actions/lyric";
 import platListAction from '../actions/playList'
-import Lyric from './lyric'
 
 import apiConfig from "../apiConfig";// import your api config
 
@@ -90,7 +89,7 @@ import apiConfig from "../apiConfig";// import your api config
   render () {
     return (
       <div className="player flex j-center a-center">
-      <div class="flex-c a-end ok">
+      <div className="flex-c a-end ok">
         <div onClick={()=>{this.state.playList && this.previousSong()}}>Previous</div>
         <div onClick={()=>{this.state.playList && this.nextSong()}}>Next</div>
       </div>
@@ -102,7 +101,8 @@ import apiConfig from "../apiConfig";// import your api config
           muted={this.muted} onEnded={() => this.nextSong()} 
           onTimeUpdate={() => this.props.onTimeUpdate(this.audio.current)} 
           autoPlay 
-          controls>
+          controls
+          controlsList="nodownload">
           Your browser does not support the <code>audio</code> element.
         </audio>
       </div>

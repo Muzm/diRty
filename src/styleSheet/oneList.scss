@@ -78,10 +78,8 @@ $length: 160px;
   transition: top .2s ease;
 }
 
-.right-bottom {
-  // max-height: 285px;
-  // overflow-y: scroll;
-  // overflow-x: hidden;
+.right-bottom > ul {
+  position: relative;
 }
 
 .totle-album {
