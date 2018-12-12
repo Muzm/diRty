@@ -84,3 +84,11 @@ code {
 .goHome .fas {
   font-size: 16px;
 }
+
+.pevent-hover {
+  cursor: auto;
+}
+.pevent-hover:hover {
+  background-color: transparent !important;
+  
+}

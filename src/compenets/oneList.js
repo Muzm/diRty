@@ -149,7 +149,7 @@ class List extends React.Component {
       toRender = this.state.viewAll ? "Viwe less tracks" : `View ${this.state.trackCount} tracks`
     }
 
-    return (<li key="More" onClick={()=>{this.loadAllTracks()}} className={ `${!this.state.viewAllLoading && 'a-track'} view-all-wap flex j-center`}>
+    return (<li key="More" onClick={()=>{this.loadAllTracks()}} className={ `${this.state.viewAllLoading && 'pevent-hover'} a-track view-all-wap flex j-center`}>
             <div className="view-all">
               {toRender}
             </div>

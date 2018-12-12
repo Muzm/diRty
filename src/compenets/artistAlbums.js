@@ -19,7 +19,8 @@ class ArtistAlbums extends React.Component {
       albumSize: 0,
       errorType: 0,
       id: porps.match.params.id,
-      loading: false
+      loading: false,
+      showMoreLoading: false
     }
   }
   
@@ -38,6 +39,7 @@ class ArtistAlbums extends React.Component {
         timeout: false,
         error: false,
         loading: true,
+        showMoreLoading: false,
         id: props.match.params.id
       }, () => this.albumFetcher(5));
     }
@@ -54,10 +56,39 @@ class ArtistAlbums extends React.Component {
         name: artistAlbums.data.artist.name,
         albumSize: artistAlbums.data.artist.albumSize,
         offset: offset,
-        loading: false
+        loading: false,
+        showMoreLoading: false
       });
     } catch(e) {
       errHandle.requstErrorHandle(e, this.setState.bind(this));
+    }
+  }
+
+  showMoreLoading() {
+    let currAlbums = this.state.artistAlbums.map((item, index)=> {
+      return (
+        <li key={index}>
+          <List scrollTop={this.props.scrollTop} name={item.name}
+          img={item.picUrl} id={item.id} action={this.props.action} isAlbum={true}></List>
+        </li>
+      );
+    });
+
+    return currAlbums
+  }
+
+  showMoreUbtnDiaply() {
+    if(this.state.albumSize > 5 && (this.state.offset + 1) * 5 < this.state.albumSize) {
+      return (<li 
+                onClick={() => {
+                  this.setState({showMoreLoading: true});
+                  this.albumFetcher(5, this.state.offset + 1);
+                }}
+                className={`a-track view-all-wap flex j-center ${this.state.showMoreLoading && 'pevent-hover'}`}>
+                <div className="view-all">
+                  {this.state.showMoreLoading ? <Loading width="150px"/> : `View more albums`}
+                </div>
+              </li>);
     }
   }
 
@@ -69,23 +100,8 @@ class ArtistAlbums extends React.Component {
           this.state.loading ? 
           <Loading width="150px"/> :
           <ul className="main-group flex-c">
-            {this.state.artistAlbums.map((item, index)=> {
-              return (
-                <li key={index}>
-                  <List scrollTop={this.props.scrollTop} name={item.name}
-                  img={item.picUrl} id={item.id} action={this.props.action} isAlbum={true}></List>
-                </li>
-              );
-            })}
-            {
-              this.state.offset * 5 < this.state.albumSize && 
-              this.state.albumSize > 5 && 
-              (<li onClick={()=>{this.albumFetcher(5, this.state.offset + 1)}} className="a-track view-all-wap flex j-center">
-                <div className="view-all">
-                  {`View more albums`}
-                </div>
-              </li>)
-            }
+            {this.showMoreLoading()}
+            {this.showMoreUbtnDiaply()}
           </ul>
         }
       </div>
