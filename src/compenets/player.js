@@ -23,7 +23,8 @@ import apiConfig from "../apiConfig";// import your api config
       muted: true,
       dotLeft: 0,
       urlOfCuurentSong: '',
-      autoPlay: false
+      autoPlay: false,
+      random: false
     };
 
     // this.volumeSilde = React.createRef();
@@ -60,10 +61,15 @@ import apiConfig from "../apiConfig";// import your api config
   }
 
   nextSong() {
-    if(this.state.playIndex + 1 === this.state.playList.length) {
-      this.props.PLAY_INDEX(0);
+    if(this.state.random) {
+      const random = Math.ceil((Math.random() * 10))
+      this.props.PLAY_INDEX(this.state.playIndex + random > this.state.playList.length ? random : random + this.state.playIndex);
     } else {
-      this.props.PLAY_INDEX(this.state.playIndex + 1);
+      if(this.state.playIndex + 1 === this.state.playList.length) {
+        this.props.PLAY_INDEX(0);
+      } else {
+        this.props.PLAY_INDEX(this.state.playIndex + 1);
+      }
     }
   }
 
@@ -91,7 +97,10 @@ import apiConfig from "../apiConfig";// import your api config
       <div className="player flex j-center a-center">
       <div className="flex-c a-end ok">
         <div onClick={()=>{this.state.playList && this.previousSong()}}>Previous</div>
-        <div onClick={()=>{this.state.playList && this.nextSong()}}>Next</div>
+        <div className="flex j-start a-center clear-curs">
+          <i className={`${this.state.random && 'random'} cur ran-con fas fa-random`} onClick={()=> {this.setState({random: !this.state.random})}}></i>
+          <div className="cur" onClick={()=>{this.state.playList && this.nextSong()}}>Next</div>
+        </div>
       </div>
         
       <div className="p-wraper flex f-start a-start">
