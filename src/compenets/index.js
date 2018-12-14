@@ -29,7 +29,7 @@ import AlbumDetail from './albumDetail';
 
   componentRe(target) {
     return (
-      <target.target {...target.props} action={this.props.MODIFY_PLAYLIST} scrollTop={this.state.scrollTop}/>
+      <target.target {...target.props} action={this.props.MODIFY_PLAYLIST} playListId={this.props.playListId} scrollTop={this.state.scrollTop}/>
     );
   }
 
@@ -58,7 +58,13 @@ import AlbumDetail from './albumDetail';
   }
 }
 
+let returnProps = (store)=> {
+  return {
+    playListId: store.list.playListId
+  };
+}
+
 export default connect(
-  null,
+  returnProps,
   action
 )(Index);

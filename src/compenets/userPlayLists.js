@@ -74,8 +74,13 @@ class UserPlayList extends React.Component {
             {this.state.userPlayList.map((item, index)=> {
               return (
                 <li key={index}>
-                  <List scrollTop={this.props.scrollTop} name={item.name} 
-                  img={item.coverImgUrl} id={item.id} action={this.props.action}></List>
+                  <List 
+                    scrollTop={this.props.scrollTop} 
+                    name={item.name} 
+                    img={item.coverImgUrl} 
+                    id={item.id} 
+                    action={this.props.action}
+                    playListId={this.props.playListId}></List>
                 </li>
               );
             })}

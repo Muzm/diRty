@@ -68,8 +68,14 @@ class ArtistAlbums extends React.Component {
     let currAlbums = this.state.artistAlbums.map((item, index)=> {
       return (
         <li key={index}>
-          <List scrollTop={this.props.scrollTop} name={item.name}
-          img={item.picUrl} id={item.id} action={this.props.action} isAlbum={true}></List>
+          <List 
+            scrollTop={this.props.scrollTop} 
+            name={item.name}
+            img={item.picUrl} 
+            id={item.id} 
+            action={this.props.action} 
+            isAlbum={true}
+            playListId={this.props.playListId}></List>
         </li>
       );
     });

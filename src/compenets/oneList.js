@@ -79,6 +79,7 @@ class List extends React.Component {
         loading: false,
         viewAllLoading: limit === 'all' ? false : this.state.viewAllLoading
       });
+      return tracks.data.playlist.tracks;
     } catch(e) {
       errHandle.requstErrorHandle(e, this.setState.bind(this));
     }
@@ -101,12 +102,13 @@ class List extends React.Component {
         loading: false,
         viewAllLoading: limit === 'all' ? false : this.state.viewAllLoading
       });
+      return tracks.songs;
     } catch(e) {
       errHandle.requstErrorHandle(e, this.setState.bind(this));
     }
   }
   
-  loadAllTracks() {
+  async loadAllTracks() {
     if(this.state.viewAll) {
       this.setState({
         visiableTRACKS: this.state.tracks.slice(0, 10), 
@@ -119,7 +121,10 @@ class List extends React.Component {
       });
     } else {
       this.setState({viewAllLoading: true});
-      this.props.isAlbum ? this.albumDetailFetcher('all') : this.trackFetcher('all');
+      let listAllTracks = this.props.isAlbum ? (await this.albumDetailFetcher('all')) : (await this.trackFetcher('all'));
+      if(this.props.playListId === this.state.id) {
+        this.props.action({playList: listAllTracks});
+      }
     }
   }
 
@@ -128,12 +133,13 @@ class List extends React.Component {
     this.loadAllTracks();
   }
 
-  displayTracks() { // display tracks
+  displayTracks() { // tracks
     let tracks = this.state.visiableTRACKS.map((item, index) => {
       return (<Track onClick={()=> {
         this.props.action({
           playList: this.state.visiableTRACKS,
-          playIndex: index
+          playIndex: index,
+          playListId: this.state.id
         });
       }} key={item.id} dt={item.dt} trackName={item.name} id={item.id} ar={item.ar} isAlbum={this.props.isAlbum}></Track>)
     });

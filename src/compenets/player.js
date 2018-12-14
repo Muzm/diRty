@@ -3,8 +3,7 @@ import "../styleSheet/audio.scss";
 import { connect } from "react-redux";
 import axios from "axios";
 
-import { SET_CURRENT_TIME } from "../actions/lyric";
-import platListAction from '../actions/playList'
+import playListAction from '../actions/playList'
 
 import apiConfig from "../apiConfig";// import your api config
 
@@ -20,6 +19,7 @@ import apiConfig from "../apiConfig";// import your api config
       volume: localStorage.getItem("volume") || 1,
       playList: props.playList,
       playIndex: props.playindex,
+      playListId: '',
       muted: true,
       dotLeft: 0,
       urlOfCuurentSong: '',
@@ -41,6 +41,7 @@ import apiConfig from "../apiConfig";// import your api config
     this.setState({
       playList: props.playList,
       playIndex: props.playIndex,
+      playListId: props.playListId
     },
     this.getCurrentSongPlayUrl);
   }
@@ -108,14 +109,12 @@ import apiConfig from "../apiConfig";// import your api config
           ref={this.audio} 
           src={this.state.urlOfCuurentSong} 
           muted={this.muted} onEnded={() => this.nextSong()} 
-          onTimeUpdate={() => this.props.onTimeUpdate(this.audio.current)} 
           autoPlay 
           controls
           controlsList="nodownload">
           Your browser does not support the <code>audio</code> element.
         </audio>
       </div>
-      {/* <Lyric /> */}
       </div>
     );
   }
@@ -124,21 +123,13 @@ import apiConfig from "../apiConfig";// import your api config
 let fetchPlayList = (store) => {
   return {
     playList: store.list.playList,
-    playIndex: store.list.playIndex
+    playIndex: store.list.playIndex,
+    playListId: store.list.playListId
   };
 }
-
-const mapDispathToProps = (dispath) => ({
-  onTimeUpdate: audio => {
-    dispath(SET_CURRENT_TIME(audio.currentTime))
-  },
-  PLAY_INDEX: index => {
-    dispath(platListAction.PLAY_INDEX(index))
-  }
-})
 
 // export default Player;
 export default connect(
   fetchPlayList,
-  mapDispathToProps
+  playListAction
 )(Player);
