@@ -3,6 +3,8 @@ import Track from './oneTrack';
 
 import { Link } from 'react-router-dom';
 
+import Loading from './loading';
+
 class Result extends React.Component {
   artistsResults() {
     return (
@@ -74,9 +76,23 @@ class Result extends React.Component {
     let fn = (toReturn) => {
       if(this.props.searching) {
         return (<li className="italic">Searching</li>);
-      } else  {
-        return this.props.searched.type === this.props.type && !this.props.result.length ? this.emptyResult() : toReturn.call(this);
-        //     当前搜索过的类型	              用户现在选择的类型	  没有结果                  
+      } else if(this.props.searched.type === this.props.type && !this.props.result.length) {
+          //     当前搜索过的类型	            用户现在选择的类型	  有结果                  
+        return this.emptyResult();
+      } else {
+        let notice = (
+          <li key="Top">
+            {
+              this.props.searched.keyword && 
+              !this.props.searching && 
+              <h3 className="curr-title">
+                {`Result of ${this.props.searched.keyword}`}
+              </h3>
+            }
+          </li>
+        );
+
+        return [notice].concat(toReturn.call(this));
       }
     }
 
@@ -91,12 +107,36 @@ class Result extends React.Component {
     }
   }
 
+  searchShowMoreLoading() {
+    if(this.props.showMoreLoading) {
+      return (<li className="a-track flex j-center">
+                <Loading width="50px"/>
+              </li>);
+    } else if(
+        this.props.count > 30 && 
+        // 搜索的结果数量大于 30 因为每页会显示30个结果
+        this.props.searched.keyword && 
+        // 当前关键字是搜索被搜索过的
+        !this.props.searching && 
+        // 不在搜索的 searching 状态中
+        this.props.offset * 30 < this.props.count 
+        // 显示的结果小于搜索结果数量
+      ) {
+        return (<li onClick={()=> this.props.showMoreHandleer()} className="a-track view-all-wap flex j-center">
+                  <div className="view-all">
+                    View more results
+                  </div>
+                </li>);
+    }
+  }
+
   render() {
     return (
       <ul className="result-u flex-c j-start a-start">
         {this.useWhichOne()}
+        {this.searchShowMoreLoading()}
       </ul>
-    )
+    );
   }
 }
 

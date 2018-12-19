@@ -21,6 +21,7 @@ import apiConfig from "../apiConfig";
       type: 1,
       searchingKeyWord: '',
       searching: false,
+      showMoreLoading: false,
       searched: {
         keyword: '',
         type: 0
@@ -37,7 +38,6 @@ import apiConfig from "../apiConfig";
       const isEmptyResult = toReturn => toReturn || []; // in SearchResult Component this.props.result must be a array to map
 
       let toSetResult = null;
-      let toSetSearchState = false;
       let toSetCount = 0;
       
       if(this.state.searched.type === 1) {
@@ -57,7 +57,8 @@ import apiConfig from "../apiConfig";
       this.setState({
         result: toSetResult,
         count: toSetCount,
-        searching: toSetSearchState
+        searching: false,
+        showMoreLoading: false
       });
     };
 
@@ -65,6 +66,7 @@ import apiConfig from "../apiConfig";
       // set current saerching keyword and type
       this.setState({
         searching: !showMore,
+        showMoreLoading: showMore,
         searched: {
           type: this.state.type,
           keyword: this.state.searchingKeyWord
@@ -98,13 +100,18 @@ import apiConfig from "../apiConfig";
 
   goodStatusJSX() {
     return (
-    <SearchResult
-      action={this.props.action}
-      searching={this.state.searching}
-      searched={this.state.searched}
-      type={this.state.type}
-      result={this.state.result}>
-    </SearchResult>
+      <SearchResult
+        action={this.props.action}
+        searching={this.state.searching}
+        searched={this.state.searched}
+        type={this.state.type}
+        result={this.state.result}
+        count={this.state.count}
+        offset={this.state.offset}
+        showMoreHandleer={this.showMoreHandleer.bind(this)}
+        showMoreLoading={this.state.showMoreLoading}>
+        
+      </SearchResult>
     )
   }
 
@@ -120,23 +127,9 @@ import apiConfig from "../apiConfig";
               setState={this.setState.bind(this)} 
               typeChange={this.typeChange.bind(this)}
               searching={this.searching.bind(this)}/>
-            <h2 className="curr-title">{this.state.searched.keyword && !this.state.searching ? `Result of ${this.state.searched.keyword}` : ''}</h2>
           </div>
           <div className="result-container">
-            {
-              errHandle.statusVisible(this.state.errorType, this.goodStatusJSX())
-            }
-            {
-              this.state.count > 30 && // 搜索的结果数量大于 30 因为每页会显示30个结果
-              this.state.searched.keyword && // 必须是搜索过的
-              !this.state.searching && // 不在搜索的 searching 状态中
-              this.state.offset * 30 < this.state.count && // 显示的结果小于搜索结果数量
-              (<div onClick={()=> this.showMoreHandleer()} className="a-track view-all-wap flex j-center">
-                <div className="view-all">
-                  View more results
-                </div>
-              </div>)
-            }
+            {errHandle.statusVisible(this.state.errorType, this.goodStatusJSX())}
           </div>
         </div>
     )
