@@ -94,7 +94,8 @@ import apiConfig from "../apiConfig";
   typeChange(type) {
     this.setState({
       type: type,
-      result: []
+      result: [],
+      offset: 0
     }, this.searching);
   }
 
