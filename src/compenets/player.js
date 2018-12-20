@@ -19,7 +19,7 @@ import apiConfig from "../apiConfig";// import your api config
       volume: localStorage.getItem("volume") || 1,
       playList: props.playList,
       playIndex: props.playindex,
-      playListId: '',
+      playListId: '', // for mark current playList if show all update this.state.playList
       muted: true,
       dotLeft: 0,
       urlOfCuurentSong: '',
@@ -27,23 +27,23 @@ import apiConfig from "../apiConfig";// import your api config
       random: false
     };
 
-    // this.volumeSilde = React.createRef();
     this.audio = React.createRef();
-    // this.dot = React.createRef();
   }
 
   async componentDidMount() {
-    // this.setState({dotLeft: this.state.volume * this.volumeSilde.current.offsetWidth});
     this.audio.current.volume = this.state.volume;
   }
 
   componentWillReceiveProps(props) {
-    this.setState({
-      playList: props.playList,
-      playIndex: props.playIndex,
-      playListId: props.playListId
-    },
-    this.getCurrentSongPlayUrl);
+    if(props.playList !== this.state.playList && props.playIndex !== this.state.playIndex) {
+      // fix server dymanic url bug
+      this.setState({
+        playList: props.playList,
+        playIndex: props.playIndex,
+        playListId: props.playListId
+      }, 
+      this.getCurrentSongPlayUrl);
+    }
   }
 
   async getCurrentSongPlayUrl() {
@@ -63,7 +63,7 @@ import apiConfig from "../apiConfig";// import your api config
 
   nextSong() {
     if(this.state.random) {
-      const random = Math.ceil((Math.random() * 10))
+      const random = Math.ceil((Math.random() * 10));
       this.props.PLAY_INDEX(this.state.playIndex + random > this.state.playList.length ? random : random + this.state.playIndex);
     } else {
       if(this.state.playIndex + 1 === this.state.playList.length) {
