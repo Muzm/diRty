@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import combine from './reducers/index';
 
 import Index from "./compenets/index";
-import Player from "./compenets/player"
 
 import './styleSheet/App.css';
 
@@ -19,8 +18,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <div className="App flex j-center">
-          <Index></Index>
-          <Player/>
+          <Index />
         </div>
       </Provider>
     );

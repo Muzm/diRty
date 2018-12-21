@@ -9,7 +9,7 @@ let playList = (state = {}, action) => {
       } else {
         index = action.playIndex;
       }
-      return Object.assign({}, state, {playList: action.playList, playIndex: index, playListId: action.playListId});
+      return Object.assign({}, state, {playList: action.playList, playIndex: index, playListId: action.playListId || state.playListId});
     case "PLAY_INDEX":
       return Object.assign({}, state, {playIndex: action.playIndex});
     default:

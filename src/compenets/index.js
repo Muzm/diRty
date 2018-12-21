@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect, Link } from "react-ro
 import UserPlayList from './userPlayLists';
 import ArtistAlbums from './artistAlbums';
 import AlbumDetail from './albumDetail';
+import Player from "./player";
 
  class Index extends Component {
   constructor(props) {
@@ -29,31 +30,38 @@ import AlbumDetail from './albumDetail';
 
   componentRe(target) {
     return (
-      <target.target {...target.props} action={this.props.MODIFY_PLAYLIST} playListId={this.props.playListId} scrollTop={this.state.scrollTop}/>
+      <target.target 
+        {...target.props} 
+        action={this.props.MODIFY_PLAYLIST} 
+        playListId={this.props.playListId} 
+        scrollTop={this.state.scrollTop}
+      />
     );
   }
 
   render () {
     return (
-     <Router>
-      <div className="index-wrap flex">
+      <Router>
+        <div className="index-wrap flex">
         <Link to="/" className="goHome flex j-center a-center">
           <i className="fas fa-dove"></i>
         </Link>
         <div onScroll={(e)=> {
-                        e.persist();
-                        this.scrollTopDebounce(e);
-                      }} className="main-outter">
-            <Switch>
-              <Route exact path="/user/:uid" render={(props) => this.componentRe({target: UserPlayList, props: props})}></Route>
-              <Route path="/album/:id" render={(props)=> this.componentRe({target: AlbumDetail, props: props})}></Route>
-              <Route path="/artist/:id" render={(props)=> this.componentRe({target: ArtistAlbums, props: props})}></Route>
-              <Route exact path="/" render={() => (<Redirect to={`/user/${localStorage.getItem('home_id') || '348024701' }`}></Redirect>)}></Route> 
-            </Switch>
+                      e.persist();
+                      this.scrollTopDebounce(e);
+                    }} className="main-outter">
+          <Switch>
+            <Route exact path="/user/:uid" render={(props) => this.componentRe({target: UserPlayList, props: props})}></Route>
+            <Route path="/album/:id" render={(props)=> this.componentRe({target: AlbumDetail, props: props})}></Route>
+            <Route path="/artist/:id" render={(props)=> this.componentRe({target: ArtistAlbums, props: props})}></Route>
+            <Route exact path="/" render={() => (<Redirect to={`/user/${localStorage.getItem('home_id') || '348024701' }`}></Redirect>)}></Route> 
+          </Switch>
         </div>
         <DoSome action={this.props.MODIFY_PLAYLIST}></DoSome>
+
+        <Player playListId={this.props.playListId}/>
       </div>
-     </Router>
+    </Router>
     );
   }
 }

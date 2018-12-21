@@ -36,12 +36,12 @@ import apiConfig from "../apiConfig";// import your api config
 
   componentWillReceiveProps(props) {
     if(this.state.playListId !== props.playListId || props.playIndex !== this.state.playIndex) {
-      // fix server dynamic url bug
+      // fix song dynamic url bug
       this.setState({
         playList: props.playList,
         playIndex: props.playIndex,
         playListId: props.playListId
-      }, 
+      },
       this.getCurrentSongPlayUrl);
     }
   }
