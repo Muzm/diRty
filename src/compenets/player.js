@@ -109,7 +109,8 @@ import playListAction from '../actions/playList'
         <audio 
           ref={this.audio} 
           src={this.state.urlOfCuurentSong} 
-          // muted={this.muted} onEnded={() => this.nextSong()} 
+          // muted={this.muted} 
+          onEnded={() => this.nextSong()} 
           autoPlay 
           controls
           controlsList="nodownload">
