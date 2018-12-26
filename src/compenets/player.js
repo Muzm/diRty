@@ -1,11 +1,11 @@
 import React from 'react';
 import "../styleSheet/audio.scss";
 import { connect } from "react-redux";
-import axios from "axios";
+// import axios from "axios";
 
 import playListAction from '../actions/playList'
 
-import apiConfig from "../apiConfig";// import your api config
+// import apiConfig from "../apiConfig";// import your api config
 
 
  class Player extends React.Component {
@@ -49,12 +49,13 @@ import apiConfig from "../apiConfig";// import your api config
   async getCurrentSongPlayUrl() {
     // const vendor = window.location.href.split('/').slice(-1).pop() === "net" ? "netease" : "xiami";
     try {
-      const { id } = this.state.playList[this.state.playIndex] || {};
-      let url = id && await axios.get(`http://${apiConfig.api}/getSong?vendor=netease&id=${id}`, {
-        timeout: 20000
-      });
+      // const { id } = this.state.playList[this.state.playIndex] || {};
+      // let url = id && await axios.get(`http://${apiConfig.api}/getSong?vendor=netease&id=${id}`, {
+      //   timeout: 20000,
+      // });
       this.setState({
-        urlOfCuurentSong: url.data.data[0].url
+        // urlOfCuurentSong: url.data.data[0].url
+        urlOfCuurentSong: `https://music.163.com/song/media/outer/url?id=${this.state.playList[this.state.playIndex].id}`
       });
     } catch(e) {
       console.log(e);
@@ -108,7 +109,7 @@ import apiConfig from "../apiConfig";// import your api config
         <audio 
           ref={this.audio} 
           src={this.state.urlOfCuurentSong} 
-          muted={this.muted} onEnded={() => this.nextSong()} 
+          // muted={this.muted} onEnded={() => this.nextSong()} 
           autoPlay 
           controls
           controlsList="nodownload">
