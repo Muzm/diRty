@@ -51,10 +51,11 @@ import Player from "./player";
                       this.scrollTopDebounce(e);
                     }} className="main-outter">
           <Switch>
-            <Route exact path="/user/:uid" render={(props) => this.componentRe({target: UserPlayList, props: props})}></Route>
-            <Route path="/album/:id" render={(props)=> this.componentRe({target: AlbumDetail, props: props})}></Route>
-            <Route path="/artist/:id" render={(props)=> this.componentRe({target: ArtistAlbums, props: props})}></Route>
-            <Route exact path="/" render={() => (<Redirect to={`/user/${localStorage.getItem('home_id') || '348024701' }`}></Redirect>)}></Route> 
+            <Route exact path="/f/user/:uid" render={(props) => this.componentRe({target: UserPlayList, props: props})}></Route>
+            <Route path="/f/album/:id" render={(props)=> this.componentRe({target: AlbumDetail, props: props})}></Route>
+            <Route path="/f/artist/:id" render={(props)=> this.componentRe({target: ArtistAlbums, props: props})}></Route>
+            <Route exact path="/f/" render={() => (<Redirect to={`/f/user/${localStorage.getItem('home_id') || '348024701' }`}></Redirect>)}></Route>
+            <Route exact path="/" render={() => (<Redirect to="/f/"></Redirect>)}></Route>
           </Switch>
         </div>
         <DoSome action={this.props.MODIFY_PLAYLIST}></DoSome>

@@ -41,7 +41,7 @@ class Track extends React.Component {
           &nbsp;-&nbsp;
           {
             !this.props.isAlbum &&
-            <Link className="link" to={`/artist/${this.state.ar[0].id}`}>{this.state.ar[0].name} &nbsp;</Link>
+            <Link className="link" to={`/f/artist/${this.state.ar[0].id}`}>{this.state.ar[0].name} &nbsp;</Link>
           }
         </div>
 
