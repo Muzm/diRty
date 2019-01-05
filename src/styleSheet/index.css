@@ -161,6 +161,7 @@ code {
     display: flex;
     flex-direction: column;
     max-width: 45%;
+    position: relative;
   }
 
   .box-of-ar-duration .line {
@@ -176,6 +177,18 @@ code {
     max-width: 100% !important;
     text-align: right;
     padding-right: 7px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+
+  .link {
+    position: absolute;
+    left: 0;
+    overflow: hidden;
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .angle {
