@@ -29,7 +29,7 @@ code {
   padding-right: 1rem;
   padding-top: 12px;
   overflow-y: scroll;
-  overflow-x: hidden; 
+  overflow-x: hidden;
   width: 50%;
 }
 
@@ -52,7 +52,7 @@ code {
   height: 100%;
   font-size: 23px;
   cursor: pointer;
-  transition: .4s color ease; 
+  transition: .4s color ease;
 }
 
 .fa-kiss-wink-heart {
@@ -90,5 +90,128 @@ code {
 }
 .pevent-hover:hover {
   background-color: transparent !important;
-  
+
+}
+
+.doSomeSwitch {
+  position: fixed;
+  right: 6px;
+  top: 0;
+  font-size: 25px;
+  display: none;
+  width: 32px;
+  height: 32px;
+}
+.doSomeSwitch .fa-cat {
+  transition: all .3s ease;
+  color: orange;
+}
+@media screen and (max-width: 1400px) {
+  .goHome {
+    margin-right: 0;
+  }
+
+  .index-wrap {
+    min-width: 100%;
+  }
+
+  .main-outter {
+    min-width: 100%;
+    padding: 35px 0 0 0;
+  }
+
+  .main-outter::-webkit-scrollbar-track {
+    /*display: none;*/
+  }
+
+  .do-some {
+    transition: all .3s ease;
+    padding-top: 40px;
+  }
+
+  .List-wrap {
+    flex-direction: column;
+  }
+
+  .List-wrap .left {
+    height: auto;
+    align-items: center;
+  }
+
+  .List-wrap .right {
+    align-items: center;
+    margin: auto;
+    width: 280px;
+  }
+
+  .list-name {
+    font-size: 1.5rem !important;
+  }
+
+  .track {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 48px;
+  }
+
+  .a-track {
+    justify-content: space-between;
+    font-size: 18px !important;
+    padding: 2px 5px !important;
+  }
+
+  .box-of-ar-duration {
+    display: flex;
+    flex-direction: column;
+    max-width: 45%;
+  }
+
+  .box-of-ar-duration .line {
+    display: none;
+  }
+
+  .ar {
+    max-width: 100% !important;
+    text-align: right;
+  }
+
+  .duration {
+    max-width: 100% !important;
+    text-align: right;
+    padding-right: 7px;
+  }
+
+  .angle {
+    left: 160px !important;
+    z-index: 999;
+  }
+
+  .p-wraper audio {
+    width: 300px;
+  }
+
+  .do-some-show {
+    transform: translateX(-100%);
+  }
+
+  .doSomeSwitch {
+    display: block;
+  }
+
+  .doSomeSwitch .fa-cat.rotate {
+    transform: rotateY(180deg);
+  }
+
+  .result-text {
+    font-size: 18px !important;
+  }
+
+  .goHome {
+    margin-left: 0;
+    left: 6px;
+  }
+
+  .goHome .fas {
+    font-size: 25px;
+  }
 }

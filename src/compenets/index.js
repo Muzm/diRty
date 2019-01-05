@@ -18,7 +18,8 @@ import Player from "./player";
   
     this.state = {
       List2Render: [],
-      scrollTop: 0
+      scrollTop: 0,
+      doSomeIsSlide: false
     };
     
     this.scrollTopDebounce = debounce((e)=> {
@@ -58,8 +59,10 @@ import Player from "./player";
             <Route exact path="/" render={() => (<Redirect to="/f/"></Redirect>)}></Route>
           </Switch>
         </div>
-        <DoSome action={this.props.MODIFY_PLAYLIST}></DoSome>
-
+        <DoSome action={this.props.MODIFY_PLAYLIST} isSlideOut={this.state.doSomeIsSlide}></DoSome>
+        <div className="doSomeSwitch" onClick={() => {this.setState({doSomeIsSlide: !this.state.doSomeIsSlide})}}>
+          <i className={`fas fa-cat ${this.state.doSomeIsSlide ? 'rotate' : ''}`}></i>
+        </div>
         <Player playListId={this.props.playListId}/>
       </div>
     </Router>
