@@ -31,6 +31,7 @@ code {
   overflow-y: scroll;
   overflow-x: hidden;
   width: 50%;
+  -webkit-overflow-scrolling: touch;
 }
 
 .fix-this-user {
