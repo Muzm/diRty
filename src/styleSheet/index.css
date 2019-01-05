@@ -118,11 +118,7 @@ code {
 
   .main-outter {
     min-width: 100%;
-    padding: 35px 0 0 0;
-  }
-
-  .main-outter::-webkit-scrollbar-track {
-    /*display: none;*/
+    padding: 35px 15px 0 15px;
   }
 
   .do-some {
@@ -214,5 +210,25 @@ code {
 
   .goHome .fas {
     font-size: 25px;
+  }
+
+  .input-c-wrap > input {
+    width: 40%;
+  }
+
+  .player {
+    padding: 0 10px 0 0;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .player .p-wraper {
+    width: 75%;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .input-c-wrap > input {
+    width: 33%;
   }
 }
