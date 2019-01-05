@@ -119,7 +119,7 @@ import apiConfig from "../apiConfig";
   render() {
   //  return errHandle.statusVisible(this.state.errorType, this.goodStatusJSX());
     return (
-        <div className="do-some main-outter flex-c j-start">
+        <div className={`do-some main-outter flex-c j-start ${this.props.isSlideOut ? 'do-some-show' : ''}`}>
           <div className="top-c">
             <Input 
               searchingKeyWord={this.state.searchingKeyWord} 

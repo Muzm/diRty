@@ -19,9 +19,9 @@ class Track extends React.Component {
   durationCount() {
     let second = Math.floor(this.props.dt / 1000);
     let toDuration = '';
-    if(second < 60) {
+    if (second < 60) {
       toDuration = `00:${second}`;
-    } else if(Math.ceil(second % 60) < 10) {
+    } else if (Math.ceil(second % 60) < 10) {
       toDuration = `${Math.floor(second / 60)}:0${Math.floor(second % 60)}`;
     } else {
       toDuration = `${Math.floor(second / 60)}:${Math.floor(second % 60)}`;
@@ -36,16 +36,17 @@ class Track extends React.Component {
         <div className="track no-wrap-eli" onClick={this.props.onClick} title={this.state.trackName}>
           <span>{this.state.trackName}</span>
         </div>
-          
-        <div className="ar no-wrap-eli" title={this.state.ar[0].name}>
-          &nbsp;-&nbsp;
-          {
-            !this.props.isAlbum &&
-            <Link className="link" to={`/f/artist/${this.state.ar[0].id}`}>{this.state.ar[0].name} &nbsp;</Link>
-          }
-        </div>
+        <div className={"box-of-ar-duration flex grow-1"}>
+          <div className="ar no-wrap-eli" title={this.state.ar[0].name}>
+            <span className={"line"}>&nbsp;-&nbsp;</span>
+            {
+              !this.props.isAlbum &&
+              <Link className="link" to={`/f/artist/${this.state.ar[0].id}`}>{this.state.ar[0].name} &nbsp;</Link>
+            }
+          </div>
 
-        <div title={this.state.duration} className="duration">{this.state.duration}</div>
+          <div title={this.state.duration} className="duration">{this.state.duration}</div>
+        </div>
       </li>
     )
   }
