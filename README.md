@@ -1,5 +1,5 @@
 # diRty.
-## Acidtar's personal music client of Netease Music
+### Acidtar's personal music client of Netease Music
 ### This project got ugly non-designed interface, prepare for it.
 ## Installing
 You need [diRty-api](https://github.com/Muzm/diRty-api) to run this project.
