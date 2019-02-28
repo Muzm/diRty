@@ -1,6 +1,7 @@
 # diRty.
-### [Velvet Underground](https://www.google.com/search?q=The+Velvet+Underground&oq=The+Velvet+Underground&aqs=chrome..69i57j69i60.319j0j4&sourceid=chrome&ie=UTF-8)
+### Acidtar's personal music client of Netease Music
 ### This project got ugly non-designed interface, prepare for it.
+Now diRty suitable for mobile phone. 12.23.2018 by [zhongerjin](https://github.com/zhongerjin)
 ## Installing
 You need [diRty-api](https://github.com/Muzm/diRty-api) to run this project.
 when you finish install [diRty-api](https://github.com/Muzm/diRty-api), then
