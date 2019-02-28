@@ -96,7 +96,7 @@ code {
 
 .doSomeSwitch {
   position: fixed;
-  right: 6px;
+  right: 12px;
   top: 0;
   font-size: 25px;
   display: none;
@@ -108,6 +108,11 @@ code {
   color: orange;
 }
 @media screen and (max-width: 1400px) {
+  .epAlbums {
+    text-align: center;
+    padding-bottom: 10px;
+  }
+  
   .goHome {
     margin-right: 0;
   }
@@ -118,17 +123,22 @@ code {
 
   .main-outter {
     min-width: 100%;
-    padding: 35px 15px 0 15px;
+    padding: 0;
+    padding-top: 15px;
+  }
+
+  .fix-this-user {
+    justify-content: center;
   }
 
   .do-some {
     transition: all .3s ease;
-    padding-top: 40px;
   }
 
   .List-wrap {
     flex-direction: column;
   }
+  
 
   .List-wrap .left {
     height: auto;
@@ -155,6 +165,7 @@ code {
     justify-content: space-between;
     font-size: 18px !important;
     padding: 2px 5px !important;
+    border-bottom: 1px solid black;
   }
 
   .box-of-ar-duration {
@@ -170,6 +181,18 @@ code {
   .ar {
     max-width: 100% !important;
     text-align: right;
+  }
+
+  .ar.no-wrap-eli {
+    display: block !important;
+  }
+
+  .top-c {
+    padding: 0 5px;
+  }
+
+  .curr-title {
+    margin-left: 5px;
   }
 
   .duration {
@@ -193,6 +216,7 @@ code {
 
   .doSomeSwitch {
     display: block;
+    cursor: pointer;
   }
 
   .doSomeSwitch .fa-cat.rotate {

@@ -101,7 +101,7 @@ class ArtistAlbums extends React.Component {
   noErrorJSX() {
     return (
       <div>
-        <h2 className='italic'>{this.state.name}'s EP and Albums <span className="totle-album">Total {this.state.albumSize} lists</span></h2>
+        <h2 className='italic epAlbums'>{this.state.name}'s EP and Albums <span className="totle-album">Total {this.state.albumSize} lists</span></h2>
         {
           this.state.loading ? 
           <Loading width="150px"/> :
