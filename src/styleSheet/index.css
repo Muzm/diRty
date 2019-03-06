@@ -133,6 +133,15 @@ code {
 
   .do-some {
     transition: all .3s ease;
+    z-index: 9999;
+  }
+  
+  .doSomeSwitch {
+    z-index: 10000;
+  }
+
+  .goHome {
+    z-index: 9998
   }
 
   .List-wrap {
