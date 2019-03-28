@@ -11,7 +11,7 @@ class Result extends React.Component {
       this.props.result.map((item, index)=>{
         return (
           <li className="flex a-track" key={index}>
-            <Link className="result-text" to={`/f/artist/${item.id}`}>
+            <Link onClick={this.props.doSomeSwitch} className="result-text" to={`/f/artist/${item.id}`}>
               {item.name}
             </Link>
           </li>
@@ -38,11 +38,11 @@ class Result extends React.Component {
       this.props.result.map((item, index)=> {
         return (
           <li className="flex a-track" key={index}>
-            <Link className="result-text" to={`/f/album/${item.id}`}>
+            <Link onClick={this.props.doSomeSwitch} className="result-text" to={`/f/album/${item.id}`}>
               {item.name}
             </Link>
             &nbsp;-&nbsp;
-            <Link className="result-text arar" to={`/f/artist/${item.artists[0].id}`}>
+            <Link onClick={this.props.doSomeSwitch} className="result-text arar" to={`/f/artist/${item.artists[0].id}`}>
               {item.artists[0].name}
             </Link>
           </li>
@@ -56,7 +56,7 @@ class Result extends React.Component {
       this.props.result.map((item, index)=>{
         return (
           <li className="flex a-track" key={index}>
-            <Link className="result-text" to={`/f/user/${item.userId}`}>{item.nickname}</Link>
+            <Link onClick={this.props.doSomeSwitch} className="result-text" to={`/f/user/${item.userId}`}>{item.nickname}</Link>
           </li>
         );
       }) 
