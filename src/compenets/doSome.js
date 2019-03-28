@@ -76,7 +76,11 @@ import apiConfig from "../apiConfig";
           let result = await axios(`http://${apiConfig.search}/search?keywords=${keyword}&type=${this.state.type}&vendor=${this.state.vendor}&limit=${30}&offset=${this.state.offset * this.state.limit}`, {
             timeout: 20000
           });
-          if(result.data) resultSetter(result.data); else this.setState({errorType: 2});
+          if(result.data) {
+            resultSetter(result.data);
+          } else {
+            this.setState({errorType: 2});
+          }
         } catch(e) {
           console.log(e);
         }
@@ -110,8 +114,9 @@ import apiConfig from "../apiConfig";
         count={this.state.count}
         offset={this.state.offset}
         showMoreHandleer={this.showMoreHandleer.bind(this)}
-        showMoreLoading={this.state.showMoreLoading}>
-        
+        showMoreLoading={this.state.showMoreLoading}
+        doSomeSwitch={this.props.doSomeSwitch}
+      >
       </SearchResult>
     )
   }

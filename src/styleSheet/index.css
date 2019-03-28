@@ -224,8 +224,12 @@ code {
   }
 
   .angle {
-    left: 160px !important;
+    left: 180px !important;
     z-index: 999;
+    width: 40px !important;
+    height: 40px !important;
+    line-height: 40px !important;
+    font-size: 40px !important;
   }
 
   .p-wraper audio {

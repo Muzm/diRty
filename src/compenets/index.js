@@ -40,6 +40,12 @@ import Player from "./player";
     );
   }
 
+  doSomeSwitch(state = null) {
+    this.setState({
+      doSomeIsSlide: state !== null ? !this.state.doSomeIsSlide : state
+    });
+  }
+
   render () {
     return (
       <Router>
@@ -59,10 +65,10 @@ import Player from "./player";
             <Route exact path="/" render={() => (<Redirect to="/f/"></Redirect>)}></Route>
           </Switch>
         </div>
-        <DoSome action={this.props.MODIFY_PLAYLIST} isSlideOut={this.state.doSomeIsSlide}></DoSome>
-        <div className="doSomeSwitch" onClick={() => {this.setState({doSomeIsSlide: !this.state.doSomeIsSlide})}}>
-          <i className={`fas fa-cat ${this.state.doSomeIsSlide ? 'rotate' : ''}`}></i>
-        </div>
+        <DoSome action={this.props.MODIFY_PLAYLIST} isSlideOut={this.state.doSomeIsSlide} doSomeSwitch={this.doSomeSwitch.bind(this, false)}></DoSome>
+          <div className="doSomeSwitch" onClick={this.doSomeSwitch.bind(this)}>
+            <i className={`fas fa-cat ${this.state.doSomeIsSlide ? 'rotate' : ''}`}></i>
+          </div>
         <Player playListId={this.props.playListId}/>
       </div>
     </Router>

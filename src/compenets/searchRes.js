@@ -28,7 +28,7 @@ class Result extends React.Component {
                     playList: this.props.result,
                     playIndex: index
                   });
-                }} key={item.id} dt={item.duration} trackName={item.name} id={item.id} ar={item.artists}></Track>
+                }} doSomeSwitch={this.props.doSomeSwitch} key={item.id} dt={item.duration} trackName={item.name} id={item.id} ar={item.artists}></Track>
               );
           }));
   }
@@ -119,7 +119,7 @@ class Result extends React.Component {
         // 当前关键字是搜索被搜索过的
         !this.props.searching && 
         // 不在搜索的 searching 状态中
-        this.props.offset * 30 < this.props.count 
+        this.props.offset * 30 < this.props.count
         // 显示的结果小于搜索结果数量
       ) {
         return (<li onClick={()=> this.props.showMoreHandleer()} className="a-track view-all-wap flex j-center">
