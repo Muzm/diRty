@@ -14,6 +14,10 @@ let store = createStore(
 );
 
 class App extends Component {
+  componentDidMount() {
+    
+  }
+
   render() {
     return (
       <Provider store={store}>

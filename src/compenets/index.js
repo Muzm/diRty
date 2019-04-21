@@ -42,7 +42,7 @@ import Player from "./player";
 
   doSomeSwitch(state = null) {
     this.setState({
-      doSomeIsSlide: state !== null ? !this.state.doSomeIsSlide : state
+      doSomeIsSlide: state !== null ? state : !this.state.doSomeIsSlide
     });
   }
 
