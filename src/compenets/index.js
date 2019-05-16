@@ -41,6 +41,7 @@ import Player from "./player";
   }
 
   doSomeSwitch(state = null) {
+    console.log(state);
     this.setState({
       doSomeIsSlide: state !== null ? state : !this.state.doSomeIsSlide
     });
@@ -66,7 +67,7 @@ import Player from "./player";
           </Switch>
         </div>
         <DoSome action={this.props.MODIFY_PLAYLIST} isSlideOut={this.state.doSomeIsSlide} doSomeSwitch={this.doSomeSwitch.bind(this, false)}></DoSome>
-          <div className="doSomeSwitch" onClick={this.doSomeSwitch.bind(this)}>
+          <div className="doSomeSwitch" onClick={this.doSomeSwitch.bind(this, !this.state.doSomeIsSlide)}>
             <i className={`fas fa-cat ${this.state.doSomeIsSlide ? 'rotate' : ''}`}></i>
           </div>
         <Player playListId={this.props.playListId}/>
