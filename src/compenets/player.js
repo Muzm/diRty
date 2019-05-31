@@ -3,7 +3,8 @@ import "../styleSheet/audio.scss";
 import { connect } from "react-redux";
 import axios from "axios";
 
-import playListAction from '../actions/playList'
+import playListAction from '../actions/playList';
+import Login from './login';
 
 import apiConfig from "../apiConfig";// import your api config
 
@@ -97,26 +98,27 @@ import apiConfig from "../apiConfig";// import your api config
   render () {
     return (
       <div className="player flex j-center a-center">
-      <div className="flex-c a-end ok">
-        <div onClick={()=>{this.state.playList && this.previousSong()}}>Previous</div>
-        <div className="flex j-start a-center clear-curs">
-          <i className={`${this.state.random && 'random'} cur ran-con fas fa-random`} onClick={()=> {this.setState({random: !this.state.random})}}></i>
-          <div className="cur" onClick={()=>{this.state.playList && this.nextSong()}}>Next</div>
+        <Login></Login>
+        <div className="flex-c a-end ok">
+          <div onClick={()=>{this.state.playList && this.previousSong()}}>Previous</div>
+          <div className="flex j-start a-center clear-curs">
+            <i className={`${this.state.random && 'random'} cur ran-con fas fa-random`} onClick={()=> {this.setState({random: !this.state.random})}}></i>
+            <div className="cur" onClick={()=>{this.state.playList && this.nextSong()}}>Next</div>
+          </div>
         </div>
-      </div>
-        
-      <div className="p-wraper flex f-start a-start">
-        <audio 
-          ref={this.audio} 
-          src={this.state.urlOfCuurentSong} 
-          // muted={this.muted} 
-          onEnded={() => this.nextSong()} 
-          autoPlay 
-          controls
-          controlsList="nodownload">
-          Your browser does not support the <code>audio</code> element.
-        </audio>
-      </div>
+          
+        <div className="p-wraper flex f-start a-start">
+          <audio 
+            ref={this.audio} 
+            src={this.state.urlOfCuurentSong} 
+            // muted={this.muted} 
+            onEnded={() => this.nextSong()} 
+            autoPlay 
+            controls
+            controlsList="nodownload">
+            Your browser does not support the <code>audio</code> element.
+          </audio>
+        </div>
       </div>
     );
   }

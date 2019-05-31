@@ -122,7 +122,7 @@ class Result extends React.Component {
         this.props.offset * 30 < this.props.count
         // 显示的结果小于搜索结果数量
       ) {
-        return (<li onClick={()=> this.props.showMoreHandleer()} className="a-track view-all-wap flex j-center">
+        return (<li onClick={()=> this.props.showMoreHandler()} className="a-track view-all-wap flex j-center">
                   <div className="view-all">
                     View more results
                   </div>

@@ -41,7 +41,6 @@ import Player from "./player";
   }
 
   doSomeSwitch(state = null) {
-    console.log(state);
     this.setState({
       doSomeIsSlide: state !== null ? state : !this.state.doSomeIsSlide
     });

@@ -88,7 +88,7 @@ import apiConfig from "../apiConfig";
     }
   }
 
-  showMoreHandleer() {
+  showMoreHandler() {
     (this.state.offset * this.state.limit) < this.state.count &&
     this.setState({
       offset: this.state.offset + 1
@@ -113,7 +113,7 @@ import apiConfig from "../apiConfig";
         result={this.state.result}
         count={this.state.count}
         offset={this.state.offset}
-        showMoreHandleer={this.showMoreHandleer.bind(this)}
+        showMoreHandler={this.showMoreHandler.bind(this)}
         showMoreLoading={this.state.showMoreLoading}
         doSomeSwitch={this.props.doSomeSwitch}
       >
