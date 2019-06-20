@@ -21,11 +21,10 @@ import apiConfig from "../apiConfig";// import your api config
       playList: props.playList,
       playIndex: props.playindex,
       playListId: '', // for mark current playList if show all update this.state.playList
-      muted: true,
-      dotLeft: 0,
       urlOfCuurentSong: '',
       autoPlay: false,
-      random: false
+      random: false,
+      currentSongId: ''
     };
 
     this.audio = React.createRef();
@@ -41,7 +40,8 @@ import apiConfig from "../apiConfig";// import your api config
       this.setState({
         playList: props.playList,
         playIndex: props.playIndex,
-        playListId: props.playListId
+        playListId: props.playListId,
+        currentSongId: props.playList[props.playIndex]['id']
       },
       this.getCurrentSongPlayUrl);
     }
@@ -98,7 +98,7 @@ import apiConfig from "../apiConfig";// import your api config
   render () {
     return (
       <div className="player flex j-center a-center">
-        <Login></Login>
+        <Login currentSongId={this.state.currentSongId}></Login>
         <div className="flex-c a-end ok">
           <div onClick={()=>{this.state.playList && this.previousSong()}}>Previous</div>
           <div className="flex j-start a-center clear-curs">
