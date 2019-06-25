@@ -13,11 +13,12 @@ class Login extends React.Component {
     super(props);
 
     this.state = {
-      logining: false,
+      showinput: false,
       phone: '',
       password: '',
       liked: false, // is liked current song
-      userName: 'Click to login'
+      userName: 'Click to login',
+      logined: false
     };
   }
 
@@ -27,13 +28,18 @@ class Login extends React.Component {
         method: "POST",
         data: {
           phone: this.state.phone,
-          password: this.state.password
+          password: this.state.password,
         },
         withCredentials: true
       });
       
       if(res.data.loginType === 1) {
         localStorage.setItem('uid', res.data.account.id);
+        this.setState({
+          logined: true,
+          userName: res.data.profile.nickname,
+          showinput: false
+        })
       }
     } catch(e) {
       console.log(`${e} login function: login.js 23`);
@@ -53,7 +59,7 @@ class Login extends React.Component {
               [this.props.currentSongId]: this.props.currentSongId
             });
             localStorage.setItem('likedSongs', JSON.stringify(toSave));
-            console.log(res);
+            this.setState({liked: true});
           } catch(e) {
             console.log(`${e} likeSong function: login.js 43`);
           }
@@ -66,13 +72,16 @@ class Login extends React.Component {
 
   checkLoginStatus = async () => {
     try {
-      const res = await axios.get(`http://${apiConfig.search}/login/status`, {
-        withCredentials: true
-      });
-      const expired = res.data.bindings[0]["expired"];
-      !expired && this.setState({ userName: res.data.profile.nickname });      
-      localStorage.setItem('loginExpired', expired);
-      return expired; // true needs login false no needs login
+      if(document.cookie && localStorage.getItem('uid')) {
+        const res = await axios.get(`http://${apiConfig.search}/login/status`, {
+          withCredentials: true
+        });
+        const expired = res.data.bindings[0]["expired"];
+        !expired && this.setState({ userName: res.data.profile.nickname, logined: true });      
+        localStorage.setItem('loginExpired', expired);
+        return expired; // true needs login false no needs login
+      }
+      return true;
     } catch(e) {
       console.log(`${e} checkLoginStatus function: login.js 67`);
     }
@@ -133,11 +142,19 @@ class Login extends React.Component {
     )[currentSongId];
     this.setState({ liked: isSaved });
   }
+  
+  inputGroupControl = () => {
+    !this.state.logined 
+    && this.setState({
+      showinput: !this.state.showinput, 
+      userName: this.state.showinput ? 'Click to login' : 'Click to hide'
+    })
+  }
 
   render() {
     return (
       <div className="login-container a-center">
-            <div className={`login flex ${this.state.logining && 'login-show'}`}>
+            <div className={`login flex ${this.state.showinput && 'login-show'}`}>
               <h4>login</h4>
               <div className="input-group flex flex-c">
                 <input 
@@ -166,9 +183,11 @@ class Login extends React.Component {
            </div>
         <div className="profile flex-c a-end">
           <div>
-            <Like like={this.likeSong} liked={this.state.liked}></Like>
+            <Like like={this.state.logined ? this.likeSong : this.inputGroupControl} liked={this.state.liked}></Like>
           </div>
-          <p className="name" onClick={() => this.setState({logining: !this.state.logining})}>{this.state.userName}</p>
+          <p className="name" onClick={this.inputGroupControl}>
+            {this.state.userName}
+          </p>
         </div>
       </div>
     )
