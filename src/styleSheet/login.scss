@@ -5,7 +5,7 @@
   left: 0;
   height: 4rem;
   justify-content: space-between;
-  width: 20rem;
+  width: 28rem;
 }
 
 .login {
@@ -14,18 +14,26 @@
   height: 4rem;
   background-color: rgb(141, 12, 12);
   border: 1px solid black;
-  position: relative;
+  border-bottom: 0;
   bottom: 0;
+  visibility: hidden;
+}
+
+.login-show {
+  visibility: visible;
 }
 
 .profile {
   justify-content: space-around;
+  padding: 5px;
 }
 
 .name {
   margin: 0;
   font-style: italic;
-  font-weight: 600;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
 }
 
 .login-input {
@@ -43,9 +51,10 @@
 }
 
 .heart {
-  font-size: 1rem;
+  font-size: 16px;
   color: #f2f2f24f;
   cursor: pointer;
+  margin-right: 4px;
 }
 
 .liked {

@@ -13,10 +13,11 @@ class Login extends React.Component {
     super(props);
 
     this.state = {
-      logining: true,
+      logining: false,
       phone: '',
       password: '',
-      liked: false // is liked current song
+      liked: false, // is liked current song
+      userName: 'Click to login'
     };
   }
 
@@ -32,7 +33,6 @@ class Login extends React.Component {
       });
       
       if(res.data.loginType === 1) {
-        console.log('res');
         localStorage.setItem('uid', res.data.account.id);
       }
     } catch(e) {
@@ -69,8 +69,10 @@ class Login extends React.Component {
       const res = await axios.get(`http://${apiConfig.search}/login/status`, {
         withCredentials: true
       });
-      localStorage.setItem('loginExpired', res.data.bindings[0]["expired"]);
-      return res.data.bindings[0]["expired"]; // true needs login false no needs login
+      const expired = res.data.bindings[0]["expired"];
+      !expired && this.setState({ userName: res.data.profile.nickname });      
+      localStorage.setItem('loginExpired', expired);
+      return expired; // true needs login false no needs login
     } catch(e) {
       console.log(`${e} checkLoginStatus function: login.js 67`);
     }
@@ -78,13 +80,12 @@ class Login extends React.Component {
 
   async syncLikeList() {
     const uid = localStorage.getItem('uid');
-    const isExpired = JSON.parse(localStorage.getItem('loginExpired'));
-    if(uid && !isExpired){
+    // const isExpired = JSON.parse(localStorage.getItem('loginExpired'));
+    if(uid){
       try {
         const res = await axios.get(`http://${apiConfig.search}/likelist?uid=${uid}`, {
             withCredentials: true
-          }
-        );
+        });
 
         if(res.data.code === 200) {
           let ids = res.data.ids;
@@ -94,10 +95,10 @@ class Login extends React.Component {
           });
           localStorage.setItem('likedSongs', JSON.stringify(toSave));
         } else {
-          console.log("can't sync like list");
+          console.log("can't sync like list relogin");
         }
       } catch(e) {
-        console.log(`${e} suncLikeList fucntion: login.js 79`);
+        console.log(`${e} syncLikeList fucntion: login.js 79`);
       }
     }
   }
@@ -108,9 +109,22 @@ class Login extends React.Component {
     }
   }
 
+  async refresh() {
+    const res = await axios.get(`http://${apiConfig.search}/login/refresh`, {
+      withCredentials: true
+    });
+
+    console.log(`refresh login: ${res.data.code}`);
+  }
+
   async componentDidMount() {
-    await this.checkLoginStatus(); // 顺序执行 先检查登陆状态再同步喜欢歌曲列表
-    await this.syncLikeList();
+    const expired = await this.checkLoginStatus();
+    if(!expired) {
+      await this.refresh(); // 顺序执行 先检查登陆状态再同步喜欢歌曲列表
+      await this.syncLikeList();
+    } else {
+      console.log('pls login');
+    }
   }
   
   componentWillReceiveProps({ currentSongId }) {
@@ -122,21 +136,18 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className="login-container">
-        {
-          this.state.logining && 
-          (
-            <div className="login flex">
+      <div className="login-container a-center">
+            <div className={`login flex ${this.state.logining && 'login-show'}`}>
               <h4>login</h4>
               <div className="input-group flex flex-c">
                 <input 
                 type="text" 
                 className="login-input username"  
                 onKeyDown={this.inputEnter}
-                onChange={ e => 
-                    this.setState({
-                      phone: e.target.value,
-                    })
+                onChange={e => 
+                  this.setState({
+                    phone: e.target.value,
+                  })
                 } 
                 value={this.state.phone} 
                 placeholder="Phone"></input>
@@ -153,14 +164,12 @@ class Login extends React.Component {
                 placeholder="Password"></input>
               </div>
            </div>
-          )
-        }
-        <div className="profile flex-c a-center">
-          <img alt="avatar" className="avatar" src={require('../asset/deer.jpg')}></img>
-          <p className="name">{'Login to Like'}</p>
+        <div className="profile flex-c a-end">
+          <div>
+            <Like like={this.likeSong} liked={this.state.liked}></Like>
+          </div>
+          <p className="name" onClick={() => this.setState({logining: !this.state.logining})}>{this.state.userName}</p>
         </div>
-        <Like like={this.likeSong} liked={this.state.liked}></Like>
-        
       </div>
     )
     
