@@ -1,11 +1,9 @@
 .login-container {
   display: flex;
   flex-direction: row;
-  position: absolute;
-  left: 0;
   height: 4rem;
   justify-content: space-between;
-  width: 28rem;
+  position: relative;
 }
 
 .login {
@@ -17,6 +15,8 @@
   border-bottom: 0;
   bottom: 0;
   visibility: hidden;
+  position: absolute;
+  left: -12rem;
 }
 
 .login-show {

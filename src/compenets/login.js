@@ -35,11 +35,12 @@ class Login extends React.Component {
       
       if(res.data.loginType === 1) {
         localStorage.setItem('uid', res.data.account.id);
+        localStorage.setItem('home_id', res.data.account.id);
         this.setState({
           logined: true,
           userName: res.data.profile.nickname,
           showinput: false
-        })
+        });
       }
     } catch(e) {
       console.log(`${e} login function: login.js 23`);
@@ -54,12 +55,17 @@ class Login extends React.Component {
             const res = await axios.get(`http://${apiConfig.search}/like?id=${this.props.currentSongId}`, {
               withCredentials: true
             });
-            const likedSongs = JSON.parse(localStorage.getItem('likedSongs')) || {};
-            const toSave = Object.assign(likedSongs, {
-              [this.props.currentSongId]: this.props.currentSongId
-            });
-            localStorage.setItem('likedSongs', JSON.stringify(toSave));
-            this.setState({liked: true});
+            console.log(res);
+            if(res.data.code === 200) {
+              const likedSongs = JSON.parse(localStorage.getItem('likedSongs')) || {};
+              const toSave = Object.assign(likedSongs, {
+                [this.props.currentSongId]: this.props.currentSongId
+              });
+              localStorage.setItem('likedSongs', JSON.stringify(toSave));
+              this.setState({liked: true});
+            } else {
+              throw Error('Failed to like currnet song.');
+            }
           } catch(e) {
             console.log(`${e} likeSong function: login.js 43`);
           }
