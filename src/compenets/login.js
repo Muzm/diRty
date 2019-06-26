@@ -41,6 +41,7 @@ class Login extends React.Component {
           userName: res.data.profile.nickname,
           showinput: false
         });
+        this.syncLikeList();
       }
     } catch(e) {
       console.log(`${e} login function: login.js 23`);
