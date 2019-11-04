@@ -132,7 +132,7 @@ code {
   }
 
   .do-some {
-    transition: all .3s ease;
+    transition: transform .3s cubic-bezier(.25, .1, .25, .1);
     z-index: 9999;
   }
   

@@ -32,7 +32,7 @@ class UserPlayList extends React.Component {
       let userPlayList = await axios(`http://${apiConfig.api}/userPlayList?uid=${this.props.match.params.uid}`, 
       {
         method: "GET",
-        timeout: 20000,
+        timeout: 40000,
         withCredentials: true
       });
 
